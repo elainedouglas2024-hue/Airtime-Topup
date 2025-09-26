@@ -2,1350 +2,220 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ETOPUP - Instant Airtime Top-up for Safaricom & Airtel</title>
+  <title>Airtime USSD Menu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Instantly top-up your Safaricom or Airtel airtime with M-Pesa. Fast, secure and reliable service 24/7.">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #4ECDC4, #44A08D);
-      color: #333;
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    /* Header */
-    .header {
-      background: #fff;
-      padding: 1rem;
+      margin: 0;
+      background: #dcdcdc;
+      font-family: monospace, Arial, sans-serif;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .logo-section {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .robot-icon {
-      width: 40px;
-      height: 40px;
-    }
-
-    .logo-text {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #333;
-    }
-
-    .logo-text .highlight {
-      color: #FF6B35;
-    }
-
-    .hamburger {
-      display: flex;
-      flex-direction: column;
-      cursor: pointer;
-      padding: 0.5rem;
-      gap: 3px;
-    }
-
-    .hamburger span {
-      width: 25px;
-      height: 3px;
-      background: #333;
-      border-radius: 2px;
-      transition: all 0.3s;
-    }
-
-    .hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(6px, 6px);
-    }
-
-    .hamburger.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
-    }
-
-    /* Mobile Menu */
-    .mobile-menu {
-      position: fixed;
-      top: 0;
-      right: -300px;
-      width: 300px;
+      justify-content: center;
+      align-items: flex-start;
       height: 100vh;
+      padding-top: 40px;
+    }
+    .ussd-box {
       background: #fff;
-      z-index: 200;
-      transition: right 0.3s ease;
-      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-    }
-
-    .mobile-menu.active {
-      right: 0;
-    }
-
-.menu-header {
-  padding: 1rem;
-      border-bottom: 1px solid #eee;
-      text-align: center;
-    }
-
-    .menu-header .robot-icon {
-      width: 60px;
-      height: 60px;
-      margin: 0 auto 1rem;
-    }
-
-    .menu-items {
-      padding: 1rem 0;
-    }
-
-    .menu-item {
-      display: block;
-      padding: 1rem 1.5rem;
-      color: #333;
-      text-decoration: none;
-      border-bottom: 1px solid #f5f5f5;
-      transition: background 0.3s;
-    }
-
-    .menu-item:hover {
-      background: #f8f9fa;
-    }
-
-    .menu-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      z-index: 150;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s;
-    }
-
-    .menu-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    /* Main Container */
-    .container { 
-      max-width: 420px; 
-      margin: 0 auto; 
-      padding: 1rem; 
-    }
-    
-    .main-card {
-      background: #fff;
-      border-radius: 20px; 
-      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-      overflow: hidden;
-      margin-bottom: 2rem;
-    }
-    
-    .card-body { padding: 2rem 1.5rem; }
-
-    /* Network buttons */
-    .section-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: #333;
-    }
-
-    .network-buttons { 
-      display: grid; 
-      grid-template-columns: 1fr 1fr; 
-      gap: 1rem; 
-      margin-bottom: 2rem;
-    }
-    
-    .network-btn {
-      padding: 1.2rem 1rem; 
-      border: 2px solid #e8e8e8; 
-      border-radius: 16px; 
-      text-align: center;
-      font-weight: 600; 
-      cursor: pointer; 
-      transition: all 0.3s;
-      background: #fff;
+      border-radius: 6px;
+      width: 90%;
+      max-width: 360px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
     }
-    
-    .network-btn img {
-      width: 32px;
-      height: 32px;
-      object-fit: contain;
-    }
-    
-    .network-btn.safaricom { 
-      border-color: #00a651; 
-    }
-    
-    .network-btn.safaricom:hover {
-      background: rgba(0, 166, 81, 0.05);
-    }
-    
-    .network-btn.airtel { 
-      border-color: #ff0000; 
-    }
-
-    .network-btn.airtel:hover {
-      background: rgba(255, 0, 0, 0.05);
-    }
-    
-    .network-btn.selected {
-      background: #4ECDC4;
-      color: #fff; 
-      border-color: #4ECDC4;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(78, 205, 196, 0.3);
-    }
-    
-    .network-btn.selected img {
-      filter: brightness(0) invert(1);
-    }
-
-    /* Form fields */
-    .form-group { margin-bottom: 1.5rem; }
-    .form-group label { 
-      display: block; 
-      font-weight: 600; 
-      margin-bottom: 0.75rem; 
-      color: #333;
-      font-size: 0.95rem;
-    }
-    
-    .form-input {
-      width: 100%; 
-      padding: 1rem 1.2rem; 
-      border: 2px solid #e8e8e8;
-      border-radius: 16px; 
-      font-size: 1rem;
-      transition: all 0.3s;
-      background: #fff;
-    }
-    
-    .form-input:focus {
-      outline: none;
-      border-color: #4ECDC4;
-      box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.1);
-    }
-    
-    .form-input.error { 
-      border-color: #FF6B6B; 
-      background: rgba(255, 107, 107, 0.05);
-    }
-    
-    .validation-message { 
-      color: #FF6B6B; 
-      font-size: 0.85rem; 
-      margin-top: 0.5rem; 
-      display: none;
-      padding: 0.75rem;
-      background: rgba(255, 107, 107, 0.1);
-      border-radius: 12px;
-      border-left: 4px solid #FF6B6B;
-    }
-    
-    .validation-message.show { display: block; }
-    
-.amount-info {
-  font-size: 0.85rem;
-  color: #666;
-  margin-top: 0.5rem;
-  padding: 0;            /* remove padding */
-  background: none;      /* no background */
-  border-radius: 0;      /* no rounded corners */
-}
-
-    /* Airtel number field transition */
-    #airtelNumberGroup {
-      max-height: 0; 
-      opacity: 0; 
-      overflow: hidden;
-      transition: all 0.4s ease;
-      margin-bottom: 0;
-    }
-    
-    #airtelNumberGroup.show {
-      max-height: 200px; 
-      opacity: 1;
-      margin-bottom: 1.5rem;
-    }
-
-    /* Submit button */
-    .submit-btn {
-      width: 100%; 
-      padding: 1.2rem; 
-      border: none;
-      border-radius: 16px; 
-      font-size: 1.1rem; 
-      font-weight: 600;
-      cursor: pointer; 
-      color: #fff;
-      background: linear-gradient(135deg, #FFD93D, #FF6B35);
-      transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    
-    .submit-btn:hover { 
-      transform: translateY(-2px); 
-      box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
-    }
-    
-    .submit-btn:disabled { 
-      opacity: 0.6; 
-      cursor: not-allowed; 
-      transform: none;
-    }
-
-    .status { 
-      margin-top: 1rem; 
-      text-align: center; 
-      font-weight: 500; 
-      padding: 1rem;
-      border-radius: 12px;
-      background: rgba(78, 205, 196, 0.1);
-      color: #333;
-    }
-    
-    .etopup-spinner { 
-      display: none; 
-      text-align: center; 
-      margin: 1rem 0;
-      padding: 2rem;
-    }
-    
-    .etopup-spinner.show { display: block; }
-
-    .spinner-robot {
-      width: 60px;
-      height: 60px;
-      margin: 0 auto 1rem;
-      animation: bounce 1s infinite;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    /* Popup */
-    .popup {
-      display: none; 
-      position: fixed; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      height: 100%;
-      background: rgba(0,0,0,0.8); 
-      backdrop-filter: blur(5px);
-      justify-content: center; 
-      align-items: center; 
-      z-index: 1000;
-      animation: fadeIn 0.3s ease;
-    }
-    
-    .popup.show { display: flex; }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    .popup-content {
-      background: #fff; 
-      border-radius: 20px; 
-      max-width: 90%; 
-      width: 400px;
-      max-height: 80vh;
-      overflow-y: auto; 
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-      animation: slideIn 0.3s ease;
-      margin: 1rem;
-    }
-    
-    @keyframes slideIn {
-      from { transform: translateY(-50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-    
-    .popup-robot {
-      width: 80px;
-      height: 80px;
-      margin: -40px auto 1rem;
-      position: relative;
-      z-index: 1;
-    }
-    
-    .popup-header {
-      background: linear-gradient(135deg, #4ECDC4, #44A08D); 
-      color: #fff;
-      padding: 2rem 1.5rem 1rem; 
-      text-align: center;
-      border-radius: 20px 20px 0 0;
-      position: relative;
-    }
-    
-    .popup-header h2 { 
-      margin: 0; 
-      font-size: 1.5rem;
-    }
-    
-    .popup-body { 
-      padding: 2rem 1.5rem; 
-      line-height: 1.6;
-      text-align: center;
-    }
-    
-    .popup-body h3 {
-      color: #4ECDC4;
-      margin-bottom: 1rem;
-    }
-    
-    .popup-body p, .popup-body ul {
-      margin-bottom: 1rem;
-      text-align: left;
-    }
-    
-    .popup-body ul {
-      padding-left: 1.5rem;
-    }
-    
-    .close-btn {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: rgba(255,255,255,0.2); 
-      border: none; 
-      color: #fff; 
-      font-size: 1.5rem; 
-      cursor: pointer;
-      padding: 0.5rem;
-      border-radius: 50%;
-      transition: all 0.3s;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .close-btn:hover {
-      background: rgba(255,255,255,0.3);
-      transform: rotate(90deg);
-    }
-    
-    .receipt-item { 
-      display: flex; 
-      justify-content: space-between; 
-      padding: 0.75rem 0; 
-      border-bottom: 1px solid #eee; 
-    }
-    
-    .receipt-item:last-child {
-      border-bottom: none;
-      font-weight: bold;
-      background: rgba(78, 205, 196, 0.1);
-      margin: 1rem -1.5rem -2rem;
-      padding: 1rem 1.5rem;
-      border-radius: 0 0 20px 20px;
-    }
-
-    .popup-buttons {
-      padding: 0 1.5rem 1.5rem;
-      display: flex;
-      gap: 1rem;
-    }
-
-    .popup-btn {
+    .ussd-text {
+      white-space: pre-line;
+      font-size: 14px;
+      padding: 12px;
       flex: 1;
-      padding: 1rem;
-      border: none;
-      border-radius: 12px;
-      font-weight: 600;
+      min-height: 120px;
+    }
+    .divider {
+      border-top: 1px solid #ccc;
+    }
+    .input-area {
+      padding: 8px 12px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #aaa;
+      border-radius: 4px;
+    }
+    .buttons {
+      display: flex;
+      border-top: 1px solid #ccc;
+    }
+    .btn {
+      flex: 1;
+      padding: 12px;
+      font-size: 14px;
+      text-align: center;
       cursor: pointer;
-      transition: all 0.3s;
+      user-select: none;
     }
-
-    .popup-btn.primary {
-      background: #FFD93D;
-      color: #333;
-    }
-
-    .popup-btn.secondary {
-      background: #e9ecef;
-      color: #333;
-    }
-
-    .popup-btn:hover {
-      transform: translateY(-2px);
-    }
-
-    /* Trust Section */
-    .trust-section {
-      background: #fff;
-      border-radius: 20px;
-      padding: 2rem 1.5rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-      text-align: center;
-    }
-
-    .trust-title {
-      font-size: 1.3rem;
-      font-weight: bold;
-      margin-bottom: 1rem;
-      color: #333;
-    }
-
-    .trust-features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-    }
-
-    .trust-item {
-      text-align: center;
-    }
-
-    .trust-icon {
-      width: 50px;
-      height: 50px;
-      background: linear-gradient(135deg, #4ECDC4, #44A08D);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 0.75rem;
-      color: white;
-      font-size: 1.2rem;
-    }
-
-    .trust-item h4 {
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: #333;
-    }
-
-    .trust-item p {
-      font-size: 0.8rem;
-      color: #666;
-      line-height: 1.4;
-    }
-
-    /* WhatsApp Float Button */
-    .whatsapp-float {
-      position: fixed;
-      width: 60px;
-      height: 60px;
-      bottom: 30px;
-      right: 20px;
-      background-color: #25d366;
-      color: #FFF;
-      border-radius: 50px;
-      text-align: center;
-      font-size: 28px;
-      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
-      z-index: 100;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-      animation: pulse-wa 2s infinite;
-    }
-    
-    .whatsapp-float:hover {
-      transform: scale(1.1);
-      color: #FFF;
-    }
-    
-    @keyframes pulse-wa {
-      0% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); }
-      50% { box-shadow: 0 4px 25px rgba(37, 211, 102, 0.6); }
-      100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); }
-    }
-
-    /* Footer */
-    .footer {
-      background: #fff;
-      text-align: center;
-      padding: 2rem 1rem;
-      color: #666;
-      font-size: 0.85rem;
-      border-top: 1px solid #eee;
-    }
-    
-    .footer p {
-      margin: 0.5rem 0;
-    }
-
-    .footer .highlight {
-      color: #4ECDC4;
-      font-weight: 600;
-    }
-
-    /* Responsive */
-    @media (max-width: 480px) {
-      .container { padding: 0.5rem; }
-      .card-body { padding: 1.5rem 1rem; }
-      .trust-section { padding: 1.5rem 1rem; }
-      .network-buttons { gap: 0.75rem; }
-      .network-btn { padding: 1rem 0.75rem; }
-      .trust-features { grid-template-columns: 1fr 1fr; gap: 1rem; }
-      .trust-icon { width: 40px; height: 40px; }
-      .logo-text { font-size: 1.3rem; }
-      .popup-content { width: 95%; }
-      .whatsapp-float { width: 50px; height: 50px; font-size: 24px; bottom: 20px; right: 15px; }
-    }
-
-    @media (max-width: 360px) {
-      .form-input { padding: 0.9rem 1rem; }
-      .submit-btn { padding: 1rem; font-size: 1rem; }
-      .trust-features { grid-template-columns: 1fr; }
-    }
-.menu-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #333;
-  transition: transform 0.2s;
-}
-
-.menu-close:hover {
-  transform: rotate(90deg);
-  color: #4ECDC4; /* optional: matches your brand color */
-}
+    .btn.cancel { color: red; border-right: 1px solid #ccc; }
+    .btn.send { color: green; }
+    .btn.disabled { color: #999; pointer-events: none; }
   </style>
 </head>
 <body>
-  <!-- Robot SVG Definitions -->
-  <svg style="display: none;">
-    <defs>
-      <!-- Happy Robot -->
-      <g id="robot-happy">
-        <circle cx="50" cy="60" r="25" fill="#FFD93D"/>
-        <circle cx="43" cy="55" r="3" fill="#333"/>
-        <circle cx="57" cy="55" r="3" fill="#333"/>
-        <path d="M45 65 Q50 70 55 65" stroke="#333" stroke-width="2" fill="none"/>
-        <rect x="40" y="35" width="4" height="8" fill="#666" rx="2"/>
-        <rect x="56" y="35" width="4" height="8" fill="#666" rx="2"/>
-        <circle cx="42" cy="39" r="2" fill="#333"/>
-        <circle cx="58" cy="39" r="2" fill="#333"/>
-        <rect x="35" y="75" width="30" height="20" fill="#FFD93D" rx="10"/>
-        <rect x="25" y="80" width="15" height="4" fill="#666" rx="2"/>
-        <rect x="60" y="80" width="15" height="4" fill="#666" rx="2"/>
-        <rect x="45" y="95" width="6" height="12" fill="#666" rx="3"/>
-        <rect x="49" y="95" width="6" height="12" fill="#666" rx="3"/>
-      </g>
-      
-      <!-- Sad Robot -->
-      <g id="robot-sad">
-        <circle cx="50" cy="60" r="25" fill="#FFD93D"/>
-        <circle cx="43" cy="55" r="3" fill="#333"/>
-        <circle cx="57" cy="55" r="3" fill="#333"/>
-        <path d="M45 68 Q50 63 55 68" stroke="#333" stroke-width="2" fill="none"/>
-        <rect x="40" y="35" width="4" height="8" fill="#666" rx="2"/>
-        <rect x="56" y="35" width="4" height="8" fill="#666" rx="2"/>
-        <circle cx="42" cy="39" r="2" fill="#333"/>
-        <circle cx="58" cy="39" r="2" fill="#333"/>
-        <rect x="35" y="75" width="30" height="20" fill="#FFD93D" rx="10"/>
-        <rect x="25" y="80" width="15" height="4" fill="#666" rx="2"/>
-        <rect x="60" y="80" width="15" height="4" fill="#666" rx="2"/>
-        <rect x="45" y="95" width="6" height="12" fill="#666" rx="3"/>
-        <rect x="49" y="95" width="6" height="12" fill="#666" rx="3"/>
-      </g>
-      
-      <!-- Processing Robot -->
-      <g id="robot-processing">
-        <circle cx="50" cy="60" r="25" fill="#FFD93D"/>
-        <circle cx="43" cy="55" r="3" fill="#333"/>
-        <circle cx="57" cy="55" r="3" fill="#333"/>
-        <ellipse cx="50" cy="65" rx="5" ry="2" fill="#333"/>
-        <rect x="40" y="35" width="4" height="8" fill="#666" rx="2"/>
-        <rect x="56" y="35" width="4" height="8" fill="#666" rx="2"/>
-        <circle cx="42" cy="39" r="2" fill="#333"/>
-        <circle cx="58" cy="39" r="2" fill="#333"/>
-        <rect x="35" y="75" width="30" height="20" fill="#FFD93D" rx="10"/>
-        <rect x="25" y="80" width="15" height="4" fill="#666" rx="2"/>
-        <rect x="60" y="80" width="15" height="4" fill="#666" rx="2"/>
-        <rect x="45" y="95" width="6" height="12" fill="#666" rx="3"/>
-        <rect x="49" y="95" width="6" height="12" fill="#666" rx="3"/>
-      </g>
-    </defs>
-  </svg>
-  <!-- Header -->
-  <header class="header">
-    <div class="logo-section">
-      <svg class="robot-icon" viewBox="0 0 100 120">
-        <use href="#robot-happy"/>
-      </svg>
-      <div class="logo-text">ETO<span class="highlight">PUP</span></div>
-    </div>
-    <div class="hamburger" onclick="toggleMenu()">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </header>
 
-  <!-- Mobile Menu -->
-  <div class="menu-overlay" onclick="toggleMenu()"></div>
-  <nav class="mobile-menu">
-<div class="menu-header">
-  <button class="menu-close" onclick="toggleMenu()">✕</button>
-  <svg class="robot-icon" viewBox="0 0 100 120">
-    <use href="#robot-happy"/>
-  </svg>
-  <h3>ETOPUP Menu</h3>
-</div>
-    <div class="menu-items">
-  <a href="#" class="menu-item" onclick="showPopup('About Us', getAboutContent()); toggleMenu();">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24" style="margin-right:8px;">
-      <path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-    </svg> About Us
-  </a>
-
-  <a href="#" class="menu-item" onclick="showPopup('How It Works', getHowItWorksContent()); toggleMenu();">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24" style="margin-right:8px;">
-      <path d="M12 2L1 21h22L12 2zm0 4.84L18.93 19H5.07L12 6.84zM11 10v4h2v-4h-2zm0 6v2h2v-2h-2z"/>
-    </svg> How It Works
-  </a>
-
-  <a href="#" class="menu-item" onclick="showPopup('Terms & Conditions', getTermsContent()); toggleMenu();">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24" style="margin-right:8px;">
-      <path d="M6 2h9l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2zm8 7h-4v2h4V9zm0 4h-4v2h4v-2z"/>
-    </svg> Terms & Conditions
-  </a>
-
-  <a href="#" class="menu-item" onclick="showPopup('Privacy Policy', getPrivacyContent()); toggleMenu();">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24" style="margin-right:8px;">
-      <path d="M12 1l8 4v6c0 5.25-3.5 10.74-8 12-4.5-1.26-8-6.75-8-12V5l8-4zm0 6a2 2 0 11.001 3.999A2 2 0 0112 7zm0 5c2.21 0 4 1.79 4 4v2H8v-2c0-2.21 1.79-4 4-4z"/>
-    </svg> Privacy Policy
-  </a>
-
-  <a href="#" class="menu-item" onclick="showPopup('Refund Policy', getRefundContent()); toggleMenu();">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24" style="margin-right:8px;">
-      <path d="M12 5V2L8 6l4 4V7c3.31 0 6 2.69 6 6a6 6 0 11-12 0H4a8 8 0 1016 0c0-4.42-3.58-8-8-8z"/>
-    </svg> Refund Policy
-  </a>
-
-  <a href="#" class="menu-item" onclick="showPopup('Contact Us', getContactContent()); toggleMenu();">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24" style="margin-right:8px;">
-      <path d="M21 16.5l-5.27-.61-2.52 2.52a16.92 16.92 0 01-7.59-7.59l2.52-2.52L7.5 3H3v4.5C3 15.15 8.85 21 15.5 21H20v-4.5z"/>
-    </svg> Contact Us
-  </a>
-</div>
-</nav>
-  <<div class="container">
-    <!-- Main Card -->
-    <div class="main-card">
-      <div class="card-body">
-        <!-- Network Selection -->
-        <div class="network-selection">
-          <h3 class="section-title">SELECT ONE NETWORK BEFORE PROCEEDING(Click airtel box or safaricom)</h3>
-          <div class="network-buttons">
-            <div class="network-btn safaricom" onclick="selectNetwork('safaricom')">
-              <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iOCIgZmlsbD0iIzAwQTY1MSIvPgo8cGF0aCBkPSJNMTAgMTBIMzBWMzBIMTBWMTBaIiBmaWxsPSJ3aGl0ZSIvPgo8dGV4dCB4PSIyMCIgeT0iMjUiIGZpbGw9IiMwMEE2NTEiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlM8L3RleHQ+Cjwvc3ZnPgo=" alt="Safaricom">
-              <div><strong>Safaricom</strong></div>
-            </div>
-            <div class="network-btn airtel" onclick="selectNetwork('airtel')">
-              <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iOCIgZmlsbD0iI0ZGMDAwMCIvPgo8cGF0aCBkPSJNMTAgMTBIMzBWMzBIMTBWMTBaIiBmaWxsPSJ3aGl0ZSIvPgo8dGV4dCB4PSIyMCIgeT0iMjUiIGZpbGw9IiNGRjAwMDAiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgZm9udC13ZWlnaHQ9ImJvbGQiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkE8L3RleHQ+Cjwvc3ZnPgo=" alt="Airtel">
-              <div><strong>Airtel</strong></div>
-            </div>
-          </div>
-</div>
-          </div>
-        </div>
-
-<!        <!-- Form -->
-        <form id="airtimeForm">
-          <!-- Payment Number -->
-          <div class="form-group" id="paymentNumberGroup">
-            <label for="paymentPhone">📱 Phone Number(safaricom)</label>
-            <input type="tel" id="paymentPhone" class="form-input" placeholder="07XXXXXXXX or +254XXXXXXXX" required>
-            <div class="validation-message" id="paymentPhoneError">
-              ⚠️ Please enter a valid Kenyan phone number (07XXXXXXXX or +254XXXXXXXX)
-            </div>
-          </div>
-
-          <!-- Airtel Number -->
-          <div class="form-group" id="airtelNumberGroup">
-            <label for="airtimePhone">📱 Airtel Top-up Number(01 or 07)</label>
-            <input type="tel" id="airtimePhone" class="form-input" placeholder="073XXXXXXXX or +254XXXXXXXX">
-            <div class="validation-message" id="airtimePhoneError">
-              ⚠️ Please enter a valid Airtel number (073XXXXXXXX or +254XXXXXXXX)
-            </div>
-          </div>
-
-          <!-- Amount -->
-          <div class="form-group">
-            <label for="amount">💰 Amount (KES) </label>
-            <input type="number" id="amount" class="form-input" placeholder="Enter amount (5-500)" min="5" max="500" required>
-            <div class="amount-info">
-              💡 Minimum: KES 5 • Maximum: KES 500
-            </div>
-            <div class="validation-message" id="amountError">
-              ⚠️ Amount must be between KES 5 and KES 500
-            </div>
-          </div>
-
-          <button type="submit" class="submit-btn" id="submitBtn">
-            🛒 Buy Airtime Now
-          </button>
-        </form>
-
-        <div class="status" id="status"></div>
-        <div class="etopup-spinner" id="spinner">
-          <svg class="spinner-robot" viewBox="0 0 100 120">
-            <use href="#robot-processing"/>
-          </svg>
-          <p>Processing your request...</p>
-        </div>
-      </div>
-    </div>
-      </div>
-    </div>
-
-    <!-- Trust Section -->
-    <div class="trust-section">
-      <h2 class="trust-title">Why Choose ETOPUP?</h2>
-      <p>Trusted by thousands of customers across Kenya for fast and secure airtime top-ups</p>
-      
-      <div class="trust-features">
-        <div class="trust-item">
-          <div class="trust-icon">⚡</div>
-          <h4>Instant Delivery</h4>
-          <p>Airtime credited within seconds of payment confirmation</p>
-        </div>
-        <div class="trust-item">
-          <div class="trust-icon">🔒</div>
-          <h4>100% Secure</h4>
-          <p>Protected M-Pesa payments with bank-level security</p>
-        </div>
-        <div class="trust-item">
-          <div class="trust-icon">🌟</div>
-          <h4>24/7 Service</h4>
-          <p>Available round the clock, including weekends and holidays</p>
-        </div>
-        <div class="trust-item">
-          <div class="trust-icon">💯</div>
-          <h4>99.9% Success</h4>
-          <p>Reliable service with automatic refunds for failed transactions</p>
-        </div>
-      </div>
-    </div>
+<div class="ussd-box">
+  <div class="ussd-text" id="ussdText"></div>
+  <div class="divider"></div>
+  <div class="input-area">
+    <input id="ussdInput" placeholder="" />
   </div>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <p>&copy; 2024 <span class="highlight">ETOPUP</span>. All rights reserved.</p>
-    <p>Powered by safaricom Topup service• Secure M-Pesa Partner</p>
-    <p>Powered by <span class="highlight">SG Technologies</span></p>
-  </footer>
-
-  <!-- WhatsApp Float Button -->
-  <a href="https://wa.me/254718369524?text=Hi%2C%20I%20need%20help%20with%20airtime%20top-up" class="whatsapp-float" target="_blank">
-    <i class="fab fa-whatsapp"></i>
-  </a>
-
-  <!-- Popup -->
-  <div class="popup" id="popupModal">
-    <div class="popup-content">
-      <svg class="popup-robot" viewBox="0 0 100 120" id="popupRobot">
-        <use href="#robot-happy"/>
-      </svg>
-      <div class="popup-header">
-        <h2 id="popupTitle">Information</h2>
-        <button class="close-btn" onclick="closePopup()">&times;</button>
-      </div>
-      <div class="popup-body" id="popupBody"></div>
-      <div class="popup-buttons" id="popupButtons" style="display: none;">
-        <button class="popup-btn secondary" onclick="closePopup()">Close</button>
-        <button class="popup-btn primary" id="popupAction">OK</button>
-      </div>
-    </div>
+  <div class="buttons">
+    <div class="btn cancel" onclick="resetFlow()">Cancel</div>
+    <div class="btn send" id="sendBtn" onclick="sendInput()">Send</div>
   </div>
+</div>
 
-  <script>
-    const backend = "https://airtimepurchase.onrender.com";
-    let selectedNetwork = '';
+<script>
+  const backend = "https://airtimepurchase.onrender.com"; // your backend
+  let step = 0;
+  let network = "";
+  let paymentNumber = "";
+  let airtimeNumber = "";
+  let amount = "";
+  let reference = "";
 
-    // Menu toggle
-    function toggleMenu() {
-      const hamburger = document.querySelector('.hamburger');
-      const mobileMenu = document.querySelector('.mobile-menu');
-      const overlay = document.querySelector('.menu-overlay');
-      
-      hamburger.classList.toggle('active');
-      mobileMenu.classList.toggle('active');
-      overlay.classList.toggle('active');
-      
-      if (mobileMenu.classList.contains('active')) {
-        document.body.style.overflow = 'hidden';
+  const textBox = document.getElementById("ussdText");
+  const inputBox = document.getElementById("ussdInput");
+  const sendBtn = document.getElementById("sendBtn");
+
+  function show(msg, clear=true, disable=false) {
+    textBox.innerText = msg;
+    if (clear) inputBox.value = "";
+    inputBox.disabled = disable;
+    sendBtn.classList.toggle("disabled", disable);
+    if (!disable) inputBox.focus();
+  }
+
+  function resetFlow() {
+    step = 0;
+    network = paymentNumber = airtimeNumber = amount = reference = "";
+    show("0) Safaricom Airtime\n1) Airtel Airtime\n\nChoose option:");
+  }
+
+  function isValidPhone(num) {
+    return /^0\d{9}$/.test(num) || /^254\d{9}$/.test(num);
+  }
+
+  function isValidAmount(val) {
+    const n = Number(val);
+    return !isNaN(n) && n >= 5 && n <= 500;
+  }
+
+  async function sendInput() {
+    const val = inputBox.value.trim();
+
+    if (step === 0) {
+      if (val === "0") {
+        network = "safaricom";
+        step = 1;
+        show("Enter Safaricom number to receive airtime:");
+      } else if (val === "1") {
+        network = "airtel";
+        step = 1;
+        show("Enter Airtel number to receive airtime:");
       } else {
-        document.body.style.overflow = 'auto';
+        show("0) Safaricom Airtime\n1) Airtel Airtime\n\nChoose option:", false);
       }
     }
 
-    function selectNetwork(network) {
-      selectedNetwork = network;
-      document.querySelectorAll('.network-btn').forEach(btn => btn.classList.remove('selected'));
-      event.target.closest('.network-btn').classList.add('selected');
-
-      if (network === 'airtel') {
-        document.getElementById('airtelNumberGroup').classList.add('show');
-        document.querySelector("#paymentNumberGroup label").textContent = '📱 Payment Phone (Safaricom number to biy airtime to airtel))';
-      } else {
-        document.getElementById('airtelNumberGroup').classList.remove('show');
-        document.querySelector("#paymentNumberGroup label").textContent = '📱 Phone Number';
+    else if (step === 1) {
+      if (!isValidPhone(val)) {
+        show("❌ Invalid number.\nEnter again:");
+        return;
       }
+      airtimeNumber = val;
+      step = 2;
+      show("Enter Safaricom number to pay (M-Pesa):");
     }
 
-    function validatePhone(phone) {
-      const phoneRegex = /^(\+254|254|0)?[17]\d{8}$/;
-      return phoneRegex.test(phone.replace(/\s+/g, ''));
-    }
-
-    function validateAmount(amount) {
-      const num = parseInt(amount);
-      return !isNaN(num) && num >= 5 && num <= 500;
-    }
-
-    function showFieldError(fieldId, errorId) {
-      const field = document.getElementById(fieldId);
-      const error = document.getElementById(errorId);
-      field.classList.add('error'); 
-      error.classList.add('show');
-      
-      // Auto-hide after 5 seconds
-      setTimeout(() => { 
-        field.classList.remove('error'); 
-        error.classList.remove('show'); 
-      }, 5000);
-    }
-
-    function showPopup(title, content, type = 'info') {
-      const robotUse = document.querySelector('#popupRobot use');
-      const buttons = document.getElementById('popupButtons');
-      
-      // Set robot icon based on type
-      switch(type) {
-        case 'success':
-          robotUse.setAttribute('href', '#robot-happy');
-          break;
-        case 'error':
-          robotUse.setAttribute('href', '#robot-sad');
-          break;
-        default:
-          robotUse.setAttribute('href', '#robot-happy');
+    else if (step === 2) {
+      if (!isValidPhone(val)) {
+        show("❌ Invalid Safaricom number.\nEnter again:");
+        return;
       }
-      
-      document.getElementById('popupTitle').textContent = title;
-      document.getElementById('popupBody').innerHTML = content;
-      
-      // Show/hide action buttons for transaction popups
-      if (type === 'success' || type === 'error') {
-        buttons.style.display = 'flex';
-      } else {
-        buttons.style.display = 'none';
+      paymentNumber = val;
+      step = 3;
+      show("Enter amount (KES 5 - 500):");
+    }
+
+    else if (step === 3) {
+      if (!isValidAmount(val)) {
+        show("❌ Invalid amount. Must be 5 - 500.\nEnter again:");
+        return;
       }
-      
-      document.getElementById('popupModal').classList.add('show');
-      document.body.style.overflow = 'hidden';
+      amount = val;
+      step = 4;
+      submitPurchase();
     }
+  }
 
-    function closePopup() { 
-      document.getElementById('popupModal').classList.remove('show'); 
-      document.body.style.overflow = 'auto';
-    }
-
-    // Content functions for popups
-    function getAboutContent() {
-      return `
-        <h3>About ETOPUP</h3>
-        <p>ETOPUP is Kenya's leading instant airtime top-up service, providing fast, secure, and reliable airtime purchases for Safaricom and Airtel networks.</p>
-        
-        <h3>Our Mission</h3>
-        <p>To make airtime top-up as simple as possible, available 24/7 with instant delivery and secure M-Pesa payments.</p>
-        
-        <h3>Why Choose ETOPUP?</h3>
-        <ul>
-          <li><strong>Instant Delivery:</strong> Airtime credited within seconds</li>
-          <li><strong>Secure Payments:</strong> Protected M-Pesa STK Push transactions</li>
-          <li><strong>24/7 Service:</strong> Available round the clock</li>
-          <li><strong>Multiple Networks:</strong> Support for Safaricom and Airtel</li>
-          <li><strong>Low Fees:</strong> Competitive rates with transparent pricing</li>
-        </ul>
-        
-        <p>Join thousands of satisfied customers who trust ETOPUP for their airtime needs.</p>
-      `;
-    }
-
-    function getHowItWorksContent() {
-      return `
-        <h3>How ETOPUP Works</h3>
-        <p>Getting airtime is easy with our simple 4-step process:</p>
-        
-        <h3>Step 1: Select Network</h3>
-        <p>Choose between Safaricom or Airtel network buttons.</p>
-        
-        <h3>Step 2: Enter Details</h3>
-        <ul>
-          <li>Enter your M-Pesa number (for payment)</li>
-          <li>Enter the number to receive airtime (if different)</li>
-          <li>Choose amount between KES 5 - 500</li>
-        </ul>
-        
-        <h3>Step 3: Make Payment</h3>
-        <p>You'll receive an STK Push on your phone. Enter your M-Pesa PIN to complete payment.</p>
-        
-        <h3>Step 4: Receive Airtime</h3>
-        <p>Once payment is confirmed, airtime is instantly credited to the specified number.</p>
-        
-        <h3>Transaction Status</h3>
-        <p>Track your transaction in real-time with our status updates and receive a detailed receipt.</p>
-        
-        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
-          <strong>💡 Pro Tip:</strong> Save this page to your home screen for quick access to airtime top-up!
-        </div>
-      `;
-    }
-
-    function getTermsContent() {
-      return `
-        <h3>Terms & Conditions</h3>
-        <p><strong>Last updated:</strong> September 2025</p>
-        
-        <h3>1. Service Agreement</h3>
-        <p>By using ETOPUP, you agree to these terms and conditions. Our service provides instant airtime top-up for Safaricom and Airtel networks in Kenya.</p>
-        
-        <h3>2. Transaction Limits</h3>
-        <ul>
-          <li>Minimum transaction: KES 5</li>
-          <li>Maximum transaction: KES 500</li>
-          <li>Daily limit: KES 10,000 per phone number</li>
-        </ul>
-        
-        <h3>3. Payment Terms</h3>
-        <ul>
-          <li>All payments must be made via M-Pesa</li>
-          <li>Transactions are processed in real-time</li>
-          <li>Failed payments are automatically refunded</li>
-        </ul>
-        
-        <h3>4. Service Availability</h3>
-        <p>We strive for 99.9% uptime but cannot guarantee uninterrupted service due to maintenance or technical issues.</p>
-        
-        <h3>5. User Responsibilities</h3>
-        <ul>
-          <li>Provide accurate phone numbers</li>
-          <li>Ensure sufficient M-Pesa balance</li>
-          <li>Keep transaction references for support</li>
-        </ul>
-        
-        <h3>6. Liability</h3>
-        <p>ETOPUP is not liable for network provider delays or service interruptions beyond our control.</p>
-        
-        <h3>7. Changes to Terms</h3>
-        <p>We reserve the right to update these terms. Continued use constitutes acceptance of changes.</p>
-      `;
-    }
-
-    function getPrivacyContent() {
-      return `
-        <h3>Privacy Policy</h3>
-        <p><strong>Last updated:</strong> September 2025</p>
-        
-        <h3>Information We Collect</h3>
-        <ul>
-          <li>Phone numbers for transaction processing</li>
-          <li>Transaction amounts and references</li>
-          <li>Basic usage analytics for service improvement</li>
-        </ul>
-        
-        <h3>How We Use Your Information</h3>
-        <ul>
-          <li>Process airtime top-up transactions</li>
-          <li>Provide customer support</li>
-          <li>Send transaction confirmations</li>
-          <li>Improve our services</li>
-        </ul>
-        
-        <h3>Information Security</h3>
-        <p>We implement industry-standard security measures to protect your data:</p>
-        <ul>
-          <li>SSL encryption for all data transmission</li>
-          <li>Secure servers with regular security updates</li>
-          <li>No storage of M-Pesa PINs or sensitive payment data</li>
-          <li>Regular security audits and monitoring</li>
-        </ul>
-        
-        <h3>Data Sharing</h3>
-        <p>We do not sell, trade, or share your personal information with third parties except:</p>
-        <ul>
-          <li>With network providers to process airtime top-ups</li>
-          <li>When required by law or legal process</li>
-          <li>To protect our rights and prevent fraud</li>
-        </ul>
-        
-        <h3>Data Retention</h3>
-        <p>Transaction records are kept for 7 years for accounting and regulatory purposes. Personal data is deleted when no longer needed.</p>
-        
-        <h3>Your Rights</h3>
-        <p>You have the right to access, update, or delete your personal information. Contact us for any privacy concerns.</p>
-      `;
-    }
-
-    function getRefundContent() {
-      return `
-        <h3>Refund Policy</h3>
-        <p><strong>Last updated:</strong> September 3025</p>
-        
-        <h3>Automatic Refunds</h3>
-        <p>Refunds are automatically processed in the following cases:</p>
-        <ul>
-          <li>Payment deducted but airtime not delivered within 10 minutes</li>
-          <li>Technical error during transaction processing</li>
-          <li>Duplicate charges due to system error</li>
-        </ul>
-        
-        <h3>Refund Timeline</h3>
-        <ul>
-          <li><strong>Failed Transactions:</strong> Immediate automatic refund</li>
-          <li><strong>Technical Issues:</strong> 24-48 hours</li>
-          <li><strong>Disputed Charges:</strong> 3-5 business days after investigation</li>
-        </ul>
-        
-        <h3>Manual Refund Requests</h3>
-        <p>To request a manual refund, contact us with:</p>
-        <ul>
-          <li>Transaction reference number</li>
-          <li>Phone number used for payment</li>
-          <li>Date and time of transaction</li>
-          <li>Reason for refund request</li>
-        </ul>
-        
-        <h3>Non-Refundable Transactions</h3>
-        <ul>
-          <li>Successfully delivered airtime</li>
-          <li>User error in phone number entry (if airtime delivered to wrong number)</li>
-          <li>Transactions older than 30 days</li>
-        </ul>
-        
-        <h3>Refund Methods</h3>
-        <p>All refunds are processed back to the original M-Pesa account used for payment.</p>
-        
-        <h3>Dispute Resolution</h3>
-        <p>If you're not satisfied with our refund decision, you may escalate to our customer service manager within 14 days.</p>
-        
-        <div style="background: #e8f5e8; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
-          <strong>💚 Customer First:</strong> We're committed to fair and prompt resolution of all refund requests.
-        </div>
-      `;
-    }
-
-    function getContactContent() {
-      return `
-        <h3>Contact Us</h3>
-        <p>We're here to help! Reach out to us through any of the following channels:</p>
-        
-        <h3>Customer Support</h3>
-        <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
-          <p><strong><i class="fab fa-whatsapp" style="color: #25d366;"></i> WhatsApp Support</strong><br>
-          <a href="https://wa.me/254718369524" target="_blank" style="color: #25d366;">+254 718 369 524</a><br>
-          <small>Available 24/7 for instant support</small></p>
-        </div>
-        
-        <h3>Business Hours</h3>
-        <ul>
-          <li><strong>WhatsApp:</strong> 24/7 automated + live chat</li>
-          <li><strong>Phone Support:</strong> Mon-Sun, 6:00 AM - 11:00 PM</li>
-          <li><strong>Email Response:</strong> Within 2-4 hours</li>
-        </ul>
-        
-        <h3>What We Can Help With</h3>
-        <ul>
-          <li>Transaction status and issues</li>
-          <li>Refund requests and processing</li>
-          <li>Technical support and troubleshooting</li>
-          <li>Account questions and assistance</li>
-          <li>General inquiries about our service</li>
-        </ul>
-        
-        <h3>Before You Contact Us</h3>
-        <p>For faster assistance, please have ready:</p>
-        <ul>
-          <li>Transaction reference number</li>
-          <li>Phone number used for payment</li>
-          <li>Date and time of transaction</li>
-          <li>Screenshots of any error messages</li>
-        </ul>
-        
-        <div style="background: #e3f2fd; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
-          <strong>🚀 Quick Tip:</strong> Use our WhatsApp chat for the fastest response time!
-        </div>
-      `;
-    }
-
-    // Form submission
-    document.getElementById('airtimeForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const paymentPhone = document.getElementById('paymentPhone').value.trim();
-      const airtimePhone = document.getElementById('airtimePhone').value.trim();
-      const amount = parseInt(document.getElementById('amount').value);
-      const statusDiv = document.getElementById('status');
-      const spinner = document.getElementById('spinner');
-      const submitBtn = document.getElementById('submitBtn');
-
-      // Clear previous status
-      statusDiv.textContent = ''; 
-      spinner.classList.remove('show');
-
-      // Validation
-      if (!selectedNetwork) { 
-        showPopup('Network Required', '<p>⚠️ Please select a network (Safaricom or Airtel) before proceeding.</p>', 'error');
-        return; 
+  async function submitPurchase() {
+    show("📡 Processing STK Push...\nComplete on your phone", true, true);
+    try {
+      const resp = await fetch(`${backend}/purchase`, {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body: JSON.stringify({
+          payment_number: paymentNumber,
+          airtime_number: airtimeNumber,
+          amount: amount
+        })
+      });
+      const data = await resp.json();
+      if (!data.success || !data.reference) {
+        show("❌ Failed to init payment.\n" + (data.message || ""), true, false);
+        return;
       }
-      
-      if (!validatePhone(paymentPhone)) { 
-        showFieldError('paymentPhone','paymentPhoneError'); 
-        return; 
-      }
-      
-      if (selectedNetwork === 'airtel' && !validatePhone(airtimePhone)) { 
-        showFieldError('airtimePhone','airtimePhoneError'); 
-        return; 
-      }
-      
-      if (!validateAmount(amount)) { 
-        showFieldError('amount','amountError'); 
-        return; 
-      }
+      reference = data.reference;
+      pollStatus();
+    } catch (err) {
+      show("⚠️ Error: " + err.message, true, false);
+    }
+  }
 
-// Start processing
-statusDiv.innerHTML = '📱 Sending STK push to your phone...'; 
-spinner.classList.add('show'); 
-submitBtn.disabled = true;
-
-// Auto-scroll to status + spinner
-document.getElementById('status').scrollIntoView({ 
-  behavior: 'smooth', 
-  block: 'center' 
-});
-
+  function pollStatus() {
+    let attempts = 0;
+    const poll = setInterval(async () => {
+      attempts++;
       try {
-        const resp = await fetch(`${backend}/purchase`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            payment_number: paymentPhone,
-            airtime_number: selectedNetwork === 'airtel' ? airtimePhone : paymentPhone,
-            amount: amount
-          })
-        });
-        
-        const data = await resp.json();
-        
-        if (!data.reference) { 
-          statusDiv.innerHTML = '❌ No reference returned. Please try again.'; 
-          spinner.classList.remove('show'); 
-          submitBtn.disabled = false; 
-          return; 
+        const res = await fetch(`${backend}/api/status/${reference}`);
+        const s = await res.json();
+
+        if (s.success) {
+          show(
+            `Payment: ${s.paycenta.status}\nAirtime: ${s.airtime}\n\nRef: ${reference}`,
+            false,
+            true
+          );
+          if (["success","failed","cancelled"].includes(s.paycenta.status) || s.airtime !== "pending") {
+            clearInterval(poll);
+            sendBtn.classList.remove("disabled");
+          }
         }
-
-        const ref = data.reference;
-        let attempts = 0;
-        
-        const poll = setInterval(async () => {
-          attempts++;
-          try {
-            const s = await fetch(`${backend}/api/status/${ref}`);
-            const sd = await s.json();
-            
-            if (sd.success) {
-              statusDiv.innerHTML = `ℹ️ Payment: ${sd.paycenta.status} | Airtime: ${sd.airtime}`;
-              
-              if (['success','failed','cancelled'].includes(sd.paycenta.status) || sd.airtime !== 'pending') {
-                clearInterval(poll); 
-                spinner.classList.remove('show'); 
-                submitBtn.disabled = false;
-                
-                const isSuccess = sd.paycenta.status === 'success' && sd.airtime === 'success';
-                const receipt = `
-                  <h3>🧾 Transaction Receipt</h3>
-                  <div class="receipt-item"><span>Reference:</span><span>${sd.reference}</span></div>
-                  <div class="receipt-item"><span>Payment Number:</span><span>${sd.paymentNumber}</span></div>
-                  <div class="receipt-item"><span>Airtime Number:</span><span>${sd.airtimeNumber || sd.paymentNumber}</span></div>
-                  <div class="receipt-item"><span>Amount:</span><span>KES ${sd.amount}</span></div>
-                  <div class="receipt-item"><span>Payment Status:</span><span>${sd.paycenta.status}</span></div>
-                  <div class="receipt-item"><span>Airtime Status:</span><span>${sd.airtime}</span></div>
-                `;
-                showPopup(isSuccess ? "Transaction Successful" : "Transaction Failed", receipt, isSuccess ? 'success' : 'error');
-              }
-            }
-          } catch (pollError) {
-            console.error('Polling error:', pollError);
-          }
-          
-          if (attempts >= 40) { 
-            clearInterval(poll); 
-            statusDiv.innerHTML = '⏰ Timeout waiting for result. Please check your phone for SMS confirmation.'; 
-            spinner.classList.remove('show'); 
-            submitBtn.disabled = false; 
-          }
-        }, 5000);
-
       } catch (err) {
-        console.error('Transaction error:', err);
-        statusDiv.innerHTML = '⚠️ Connection error. Please check your internet and try again.'; 
-        spinner.classList.remove('show'); 
-        submitBtn.disabled = false;
+        show("⚠️ Poll error: " + err.message, false, true);
       }
-    });
 
-    // Close popup when clicking outside
-    document.getElementById('popupModal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closePopup();
+      if (attempts >= 40) {
+        clearInterval(poll);
+        show("⏰ Timeout. Check SMS for confirmation.\nRef: " + reference, false, false);
       }
-    });
+    }, 5000);
+  }
 
-    // Keyboard navigation
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        closePopup();
-      }
-    });
-  </script>
+  // Start flow
+  resetFlow();
+</script>
+
 </body>
-  </html>
+</html>
