@@ -200,6 +200,100 @@
             margin-top: 15px;
         }
 
+        /* News Section Below Main Content */
+        .news-section {
+            margin: 30px 0;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .news-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .news-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .news-title {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .news-preview {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            margin: 30px 0;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .testimonial-stars {
+            color: #ffd700;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 15px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .testimonial-location {
+            color: #888;
+            font-size: 14px;
+        }
+
         /* Modal Styling */
         .modal {
             display: none;
@@ -215,12 +309,12 @@
 
         .modal-content {
             background: white;
-            margin: 10% auto;
+            margin: 5% auto;
             padding: 30px;
             border-radius: 20px;
             width: 90%;
-            max-width: 500px;
-            max-height: 80vh;
+            max-width: 600px;
+            max-height: 85vh;
             overflow-y: auto;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             animation: modalAppear 0.3s ease-out;
@@ -286,6 +380,34 @@
             background: linear-gradient(45deg, #2196F3, #1976D2);
         }
 
+        /* Fake Notification Popup */
+        .fake-notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            min-width: 280px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            color: #333;
+            font-size: 14px;
+            z-index: 1002;
+            transform: translateX(400px);
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(45deg, #e8f5e8, #f0f8f0);
+            border-left: 4px solid #4CAF50;
+        }
+
+        .fake-notification.show {
+            transform: translateX(0);
+        }
+
+        .fake-notification .notification-icon {
+            display: inline-block;
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
         /* Status Section */
         .status-section {
             margin-top: 20px;
@@ -326,11 +448,64 @@
             color: white;
         }
 
+        /* Footer */
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        .footer-section h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section ul li a {
+            color: #555;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: #667eea;
+        }
+
+        .copyright {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            color: #888;
+            font-size: 14px;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .main-content {
                 grid-template-columns: 1fr;
                 gap: 20px;
+            }
+
+            .testimonials-grid, .news-grid {
+                grid-template-columns: 1fr;
             }
 
             .container {
@@ -351,6 +526,11 @@
                 margin: 5% auto;
                 width: 95%;
                 padding: 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
             }
         }
 
@@ -400,6 +580,34 @@
         .history-item:last-child {
             border-bottom: none;
         }
+
+        .section-title {
+            text-align: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 40px 0 20px 0;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .news-article {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .news-article h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .news-article .date {
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -412,6 +620,8 @@
                 <button class="nav-btn" onclick="showModal('aboutModal')">About Us</button>
                 <button class="nav-btn" onclick="showModal('supportModal')">Support</button>
                 <button class="nav-btn" onclick="showModal('faqModal')">FAQ</button>
+                <button class="nav-btn" onclick="showModal('refundModal')">Refund Policy</button>
+                <button class="nav-btn" onclick="showModal('newsModal')">📢 News</button>
                 <button class="nav-btn" onclick="checkRewards()">My Rewards</button>
             </div>
         </div>
@@ -525,6 +735,139 @@
                 </div>
             </div>
         </div>
+
+        <!-- News Section Below Main Content -->
+        <div class="section-title">📰 Latest News & Updates</div>
+        <div class="news-section">
+            <div class="news-grid">
+                <div class="news-card" onclick="showNewsModal('news1')">
+                    <div class="news-icon">🎉</div>
+                    <div class="news-title">New Year Mega Bonus</div>
+                    <div class="news-preview">Get 10% extra bonus airtime on all purchases above 500 KES...</div>
+                </div>
+
+                <div class="news-card" onclick="showNewsModal('news2')">
+                    <div class="news-icon">🚀</div>
+                    <div class="news-title">All Networks Support</div>
+                    <div class="news-preview">Etopup now supports all major Kenyan networks including Safaricom...</div>
+                </div>
+
+                <div class="news-card" onclick="showNewsModal('news3')">
+                    <div class="news-icon">💎</div>
+                    <div class="news-title">Premium VIP Plans</div>
+                    <div class="news-preview">Introducing Premium Plans with 2x reward points for VIP customers...</div>
+                </div>
+
+                <div class="news-card" onclick="showNewsModal('news4')">
+                    <div class="news-icon">⚡</div>
+                    <div class="news-title">System Maintenance</div>
+                    <div class="news-preview">Scheduled maintenance on Jan 15, 2:00-3:00 AM. Service unaffected...</div>
+                </div>
+
+                <div class="news-card" onclick="showNewsModal('news5')">
+                    <div class="news-icon">🎁</div>
+                    <div class="news-title">Referral Program</div>
+                    <div class="news-preview">Refer friends and earn 50 bonus points for each successful referral...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonials Section -->
+        <div class="section-title">⭐ What Our Customers Say</div>
+        <div class="testimonials-section">
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-text">
+                        "Etopup is amazing! I get my airtime instantly and the bonus feature is incredible. I've saved so much money!"
+                    </div>
+                    <div class="testimonial-author">Mary Wanjiku</div>
+                    <div class="testimonial-location">Nairobi, Kenya</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-text">
+                        "The reward points system is fantastic! I've already redeemed 500 points for free airtime. Highly recommended!"
+                    </div>
+                    <div class="testimonial-author">James Kipchoge</div>
+                    <div class="testimonial-location">Eldoret, Kenya</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-text">
+                        "Super fast service! I can top up my family's phones in seconds. The customer support is also excellent."
+                    </div>
+                    <div class="testimonial-author">Grace Muthoni</div>
+                    <div class="testimonial-location">Mombasa, Kenya</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-text">
+                        "I love the bonus airtime feature! Getting 5% extra on every purchase makes a real difference. Thank you Etopup!"
+                    </div>
+                    <div class="testimonial-author">Peter Otieno</div>
+                    <div class="testimonial-location">Kisumu, Kenya</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-text">
+                        "Reliable and trustworthy service. I've been using Etopup for 6 months and never had any issues. Perfect!"
+                    </div>
+                    <div class="testimonial-author">Sarah Nyong'o</div>
+                    <div class="testimonial-location">Nakuru, Kenya</div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-text">
+                        "The best airtime service in Kenya! Easy to use, fast delivery, and great rewards. I tell all my friends about it."
+                    </div>
+                    <div class="testimonial-author">David Kamau</div>
+                    <div class="testimonial-location">Thika, Kenya</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#" onclick="showModal('aboutModal')">About Us</a></li>
+                        <li><a href="#" onclick="showModal('faqModal')">FAQ</a></li>
+                        <li><a href="#" onclick="showModal('supportModal')">Support</a></li>
+                        <li><a href="#" onclick="showModal('refundModal')">Refund Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Airtime Top-up</a></li>
+                        <li><a href="#">Reward Points</a></li>
+                        <li><a href="#">Bonus Airtime</a></li>
+                        <li><a href="#">Mobile Money</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>📞 +254 700 123 456</li>
+                        <li>📧 support@etopup.com</li>
+                        <li>💬 WhatsApp: +254 700 123 456</li>
+                        <li>🕒 24/7 Support</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Etopup. All rights reserved. | Privacy Policy | Terms of Service</p>
+                <p>Licensed by Central Bank of Kenya | Secure SSL Encryption | PCI DSS Compliant</p>
+            </div>
+        </div>
     </div>
 
     <!-- About Modal -->
@@ -617,6 +960,243 @@
         </div>
     </div>
 
+    <!-- Refund Policy Modal -->
+    <div id="refundModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Refund Policy</h2>
+            <br>
+            <div class="feature-highlight">
+                <h3>🔄 Full Refund Guarantee</h3>
+                <p>At Etopup, we stand behind our service 100%. If you're not completely satisfied, we offer a full refund under the following conditions:</p>
+            </div>
+            <br>
+            <div class="feature-highlight">
+                <h4>✅ Eligible for Refund:</h4>
+                <ul style="padding-left: 20px; margin: 10px 0;">
+                    <li>• Airtime not delivered within 24 hours</li>
+                    <li>• Airtime sent to wrong number due to system error</li>
+                    <li>• Technical issues preventing transaction completion</li>
+                    <li>• Duplicate charges for same transaction</li>
+                    <li>• Service downtime exceeding 1 hour</li>
+                </ul>
+            </div>
+            <br>
+            <div class="feature-highlight">
+                <h4>📋 Refund Process:</h4>
+                <ol style="padding-left: 20px; margin: 10px 0;">
+                    <li>Contact support within 7 days of transaction</li>
+                    <li>Provide transaction reference number</li>
+                    <li>Our team will investigate within 24 hours</li>
+                    <li>Approved refunds processed within 3-5 business days</li>
+                    <li>Refunds credited back to original payment method</li>
+                </ol>
+            </div>
+            <br>
+            <div class="feature-highlight">
+                <h4>⚠️ Non-Refundable Situations:</h4>
+                <ul style="padding-left: 20px; margin: 10px 0;">
+                    <li>• Airtime successfully delivered to intended recipient</li>
+                    <li>• User error in entering phone number</li>
+                    <li>• Requests made after 7 days</li>
+                    <li>• Bonus airtime and reward points (non-transferable)</li>
+                </ul>
+            </div>
+            <br>
+            <div class="feature-highlight">
+                <h4>📞 Contact for Refunds:</h4>
+                <p><strong>Email:</strong> refunds@etopup.com</p>
+                <p><strong>WhatsApp:</strong> +254 700 123 456</p>
+                <p><strong>Response Time:</strong> Within 24 hours</p>
+            </div>
+            <br>
+            <p><em>This policy is designed to ensure fair treatment for all customers while maintaining service integrity.</em></p>
+        </div>
+    </div>
+
+    <!-- News Modal -->
+    <div id="newsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>📢 Latest News & Updates</h2>
+            <div id="newsModalContent">
+                <div class="news-article">
+                    <h4>🎉 New Year Mega Bonus Campaign</h4>
+                    <div class="date">January 1, 2025</div>
+                    <p>We're excited to announce our biggest bonus campaign yet! For the entire month of January, get 10% extra bonus airtime on all purchases above 500 KES. This is in addition to our regular 5% bonus, meaning you'll get 15% total bonus airtime!</p>
+                    <p><strong>How to qualify:</strong> Simply make any airtime purchase of 500 KES or more during January 2025. The bonus will be automatically added to your airtime delivery.</p>
+                </div>
+
+                <div class="news-article">
+                    <h4>🚀 Universal Network Support</h4>
+                    <div class="date">December 28, 2024</div>
+                    <p>Great news! Etopup now supports ALL major Kenyan mobile networks including Safaricom, Airtel, Telkom Kenya, and Equitel. You can now top up any network using our unified platform.</p>
+                    <p><strong>Benefits:</strong> One platform for all networks, same great bonuses and rewards, instant delivery across all carriers.</p>
+                </div>
+
+                <div class="news-article">
+                    <h4>💎 Premium VIP Plans Launch</h4>
+                    <div class="date">December 25, 2024</div>
+                    <p>Introducing Etopup Premium! Our VIP customers now earn 2x reward points on every purchase and get priority customer support. Premium members also get exclusive access to special bonus campaigns.</p>
+                    <p><strong>Premium Benefits:</strong> 2x reward points, priority support, exclusive bonuses, monthly rewards, and early access to new features.</p>
+                </div>
+
+                <div class="news-article">
+                    <h4>⚡ Scheduled System Maintenance</h4>
+                    <div class="date">January 10, 2025</div>
+                    <p>We will be performing scheduled system maintenance on January 15, 2025, from 2:00 AM to 3:00 AM EAT. During this time, our servers will be upgraded for better performance.</p>
+                    <p><strong>Impact:</strong> No service interruption expected. All transactions will continue to process normally during maintenance.</p>
+                </div>
+
+                <div class="news-article">
+                    <h4>🎁 Referral Program Launch</h4>
+                    <div class="date">December 20, 2024</div>
+                    <p>Share the love and earn rewards! Our new referral program gives you 50 bonus points for each friend who signs up and makes their first purchase through your referral link.</p>
+                    <p><strong>How it works:</strong> Share your unique referral code, your friend gets 5% extra bonus on their first purchase, and you earn 50 points when they complete their transaction.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Individual News Modals -->
+    <div id="news1Modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🎉 New Year Mega Bonus Campaign</h2>
+            <div class="date">January 1, 2025</div>
+            <br>
+            <p>We're excited to announce our biggest bonus campaign yet! For the entire month of January, get <strong>10% extra bonus airtime</strong> on all purchases above 500 KES.</p>
+            <br>
+            <p>This is in addition to our regular 5% bonus, meaning you'll get <strong>15% total bonus airtime</strong> on qualifying purchases!</p>
+            <br>
+            <h4>How to Qualify:</h4>
+            <ul style="padding-left: 20px; margin: 15px 0;">
+                <li>Make any airtime purchase of 500 KES or more</li>
+                <li>Campaign valid throughout January 2025</li>
+                <li>Bonus automatically added to your airtime delivery</li>
+                <li>No maximum limit on bonus earnings</li>
+            </ul>
+            <br>
+            <p><strong>Example:</strong> Purchase 1000 KES airtime and receive 1150 KES total (1000 + 5% regular + 10% campaign bonus)!</p>
+        </div>
+    </div>
+
+    <div id="news2Modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🚀 Universal Network Support</h2>
+            <div class="date">December 28, 2024</div>
+            <br>
+            <p>Great news! Etopup now supports <strong>ALL major Kenyan mobile networks</strong> including:</p>
+            <br>
+            <ul style="padding-left: 20px; margin: 15px 0;">
+                <li>📱 Safaricom</li>
+                <li>📱 Airtel Kenya</li>
+                <li>📱 Telkom Kenya</li>
+                <li>📱 Equitel</li>
+                <li>📱 All other MVNO networks</li>
+            </ul>
+            <br>
+            <h4>Benefits of Universal Support:</h4>
+            <ul style="padding-left: 20px; margin: 15px 0;">
+                <li>✅ One platform for all networks</li>
+                <li>✅ Same great bonuses and rewards</li>
+                <li>✅ Instant delivery across all carriers</li>
+                <li>✅ Unified reward points system</li>
+                <li>✅ Single customer support contact</li>
+            </ul>
+            <br>
+            <p>You can now top up any network using our unified platform with the same great experience!</p>
+        </div>
+    </div>
+
+    <div id="news3Modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>💎 Premium VIP Plans Launch</h2>
+            <div class="date">December 25, 2024</div>
+            <br>
+            <p>Introducing <strong>Etopup Premium</strong>! Our VIP membership program for our most valued customers.</p>
+            <br>
+            <h4>Premium Benefits Include:</h4>
+            <ul style="padding-left: 20px; margin: 15px 0;">
+                <li>⭐ 2x reward points on every purchase</li>
+                <li>🎯 Priority customer support</li>
+                <li>🎁 Exclusive bonus campaigns</li>
+                <li>💰 Monthly rewards and cashback</li>
+                <li>🚀 Early access to new features</li>
+                <li>📞 Dedicated VIP support line</li>
+            </ul>
+            <br>
+            <h4>How to Become Premium:</h4>
+            <p>Premium membership is available to customers who make regular purchases. Qualifying customers will be automatically invited to join our VIP program.</p>
+            <br>
+            <p><strong>Contact support to learn more about Premium eligibility!</strong></p>
+        </div>
+    </div>
+
+    <div id="news4Modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>⚡ Scheduled System Maintenance</h2>
+            <div class="date">January 10, 2025</div>
+            <br>
+            <p>We will be performing scheduled system maintenance to improve our service quality and performance.</p>
+            <br>
+            <h4>Maintenance Details:</h4>
+            <ul style="padding-left: 20px; margin: 15px 0;">
+                <li>📅 Date: January 15, 2025</li>
+                <li>⏰ Time: 2:00 AM - 3:00 AM EAT</li>
+                <li>⏱️ Duration: 1 hour maximum</li>
+                <li>🔧 Type: Server upgrades and optimization</li>
+            </ul>
+            <br>
+            <h4>Expected Impact:</h4>
+            <p>✅ <strong>No service interruption expected</strong></p>
+            <p>✅ All transactions will continue to process normally</p>
+            <p>✅ Customer support remains available 24/7</p>
+            <br>
+            <h4>Improvements After Maintenance:</h4>
+            <ul style="padding-left: 20px; margin: 15px 0;">
+                <li>🚀 Faster transaction processing</li>
+                <li>💪 Improved system reliability</li>
+                <li>🔒 Enhanced security features</li>
+                <li>📱 Better mobile experience</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="news5Modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>🎁 Referral Program Launch</h2>
+            <div class="date">December 20, 2024</div>
+            <br>
+            <p>Share the love and earn rewards! Our new referral program lets you earn bonus points when you invite friends to Etopup.</p>
+            <br>
+            <h4>How It Works:</h4>
+            <ol style="padding-left: 20px; margin: 15px 0;">
+                <li>Get your unique referral code from customer support</li>
+                <li>Share the code with friends and family</li>
+                <li>They get 5% extra bonus on their first purchase</li>
+                <li>You earn 50 points when they complete their first transaction</li>
+            </ol>
+            <br>
+            <h4>Referral Rewards:</h4>
+            <ul style="padding-left: 20px; margin: 15px 0;">
+                <li>🎯 50 points per successful referral</li>
+                <li>🎁 Your friend gets 5% extra bonus</li>
+                <li>♾️ No limit on referrals</li>
+                <li>⚡ Points credited instantly</li>
+            </ul>
+            <br>
+            <h4>Get Started:</h4>
+            <p>Contact our customer support team to get your unique referral code and start earning today!</p>
+            <br>
+            <p><strong>📞 WhatsApp: +254 718 369 524</strong></p>
+        </div>
+    </div>
+
     <!-- Rewards Modal -->
     <div id="rewardsModal" class="modal">
         <div class="modal-content">
@@ -644,11 +1224,53 @@
         const btnLoading = document.getElementById('btnLoading');
         const statusSection = document.getElementById('statusSection');
 
+        // Fake notifications array
+        const fakeNotifications = [
+            "💰 User from Nairobi just purchased 500 KES airtime",
+            "🎉 Someone redeemed 200 points for airtime",
+            "⚡ User from Mombasa topped up 1000 KES",
+            "🎁 New user just earned 50 bonus points",
+            "💸 User from Kisumu bought 300 KES airtime",
+            "🌟 Someone just got 15% bonus airtime",
+            "📱 User topped up Safaricom 750 KES",
+            "🎯 User from Eldoret redeemed 500 points",
+            "💎 VIP customer purchased 2000 KES airtime",
+            "🚀 User just earned their first reward points"
+        ];
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             setupEventListeners();
             loadUserRewards();
+            startFakeNotifications();
         });
+
+        // Start fake notifications
+        function startFakeNotifications() {
+            setInterval(() => {
+                if (Math.random() < 0.3) { // 30% chance every 10 seconds
+                    showFakeNotification();
+                }
+            }, 10000);
+        }
+
+        function showFakeNotification() {
+            const notification = fakeNotifications[Math.floor(Math.random() * fakeNotifications.length)];
+            const fakeNotif = document.createElement('div');
+            fakeNotif.className = 'fake-notification';
+            fakeNotif.innerHTML = `<span class="notification-icon">🔔</span>${notification}`;
+            
+            document.body.appendChild(fakeNotif);
+            
+            // Show notification
+            setTimeout(() => fakeNotif.classList.add('show'), 100);
+            
+            // Hide and remove notification
+            setTimeout(() => {
+                fakeNotif.classList.remove('show');
+                setTimeout(() => fakeNotif.remove(), 300);
+            }, 4000);
+        }
 
         function setupEventListeners() {
             // Purchase form
@@ -762,6 +1384,9 @@
             if (!validateForm()) {
                 return;
             }
+
+            // Show fake notifications during purchase
+            showPurchaseNotifications();
             
             // Show loading state
             setLoadingState(true);
@@ -801,6 +1426,21 @@
             } finally {
                 setLoadingState(false);
             }
+        }
+
+        function showPurchaseNotifications() {
+            const notifications = [
+                "🔐 Secure connection established",
+                "💳 Processing M-Pesa payment...",
+                "⚡ Validating transaction details",
+                "🎯 Preparing airtime delivery"
+            ];
+
+            notifications.forEach((notif, index) => {
+                setTimeout(() => {
+                    showFakeNotification();
+                }, index * 1500);
+            });
         }
 
         function validateForm() {
@@ -1008,6 +1648,9 @@
                 showToast('error', 'Minimum 100 points required for redemption');
                 return;
             }
+
+            // Show fake notifications during redemption
+            showRedemptionNotifications();
             
             try {
                 const payload = {
@@ -1037,6 +1680,21 @@
                 console.error('Redeem error:', error);
                 showToast('error', 'Network error. Please try again.');
             }
+        }
+
+        function showRedemptionNotifications() {
+            const notifications = [
+                "🎯 Validating points balance",
+                "⚡ Processing redemption request",
+                "🎁 Preparing airtime delivery",
+                "✅ Redemption successful!"
+            ];
+
+            notifications.forEach((notif, index) => {
+                setTimeout(() => {
+                    showFakeNotification();
+                }, index * 1000);
+            });
         }
 
         async function checkRewards() {
@@ -1093,6 +1751,10 @@
             document.getElementById(modalId).style.display = 'block';
         }
 
+        function showNewsModal(newsId) {
+            document.getElementById(newsId + 'Modal').style.display = 'block';
+        }
+
         // Toast notifications
         function showToast(type, message, duration = 5000) {
             // Remove existing toasts
@@ -1144,4 +1806,4 @@
         });
     </script>
 </body>
-                  </html>
+    </html>
