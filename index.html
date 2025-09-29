@@ -1,271 +1,1147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Airtime USSD Menu</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      margin: 0;
-      background: #dcdcdc;
-      font-family: monospace, Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      height: 100vh;
-      padding-top: 40px;
-    }
-    .ussd-box {
-      background: #fff;
-      border-radius: 6px;
-      width: 90%;
-      max-width: 360px;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-    }
-    .ussd-header {
-      background: #f9f9f9;
-      padding: 6px 10px;
-      font-size: 12px;
-      text-align: center;
-      border-bottom: 1px solid #ccc;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 12px;
-    }
-    .ussd-header a {
-      text-decoration: none;
-      color: inherit;
-    }
-    .ussd-header svg {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    .ussd-header svg:hover {
-      transform: scale(1.1);
-    }
-    .ussd-text {
-      white-space: pre-line;
-      font-size: 14px;
-      padding: 12px;
-      flex: 1;
-      min-height: 120px;
-    }
-    .divider {
-      border-top: 1px solid #ccc;
-    }
-    .input-area {
-      padding: 8px 12px;
-    }
-    input {
-      width: 100%;
-      padding: 8px;
-      font-size: 14px;
-      border: 1px solid #aaa;
-      border-radius: 4px;
-    }
-    .buttons {
-      display: flex;
-      border-top: 1px solid #ccc;
-    }
-    .btn {
-      flex: 1;
-      padding: 12px;
-      font-size: 14px;
-      text-align: center;
-      cursor: pointer;
-      user-select: none;
-    }
-    .btn.send { color: green; }
-    .btn.disabled { color: #999; pointer-events: none; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etopup - Premium Airtime Top-up Service</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .nav {
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-control.error {
+            border-color: #e74c3c;
+            background-color: #ffeaea;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff33;
+            border-top: 2px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Rewards Section */
+        .rewards-info {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #333;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .points-display {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .redeem-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: modalAppear 0.3s ease-out;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        /* Toast/Alert Styling */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            min-width: 300px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 500;
+            z-index: 1001;
+            transform: translateX(400px);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+        }
+
+        .toast.error {
+            background: linear-gradient(45deg, #f44336, #d32f2f);
+        }
+
+        .toast.warning {
+            background: linear-gradient(45deg, #ff9800, #f57c00);
+        }
+
+        .toast.info {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+        }
+
+        /* Status Section */
+        .status-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            display: none;
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .status-pending {
+            background: #ff9800;
+            color: white;
+        }
+
+        .status-success {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .status-failed {
+            background: #f44336;
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .nav-btn {
+                margin: 5px;
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+
+            .modal-content {
+                margin: 5% auto;
+                width: 95%;
+                padding: 20px;
+            }
+        }
+
+        /* Additional Effects */
+        .feature-highlight {
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .feature-highlight:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .phone-prefix {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        .phone-input {
+            padding-left: 50px !important;
+        }
+
+        .transaction-history {
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+
+        .history-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">💎 Etopup</div>
+            <p>Premium Airtime Top-up Service with Instant Rewards</p>
+            <div class="nav">
+                <button class="nav-btn" onclick="showModal('aboutModal')">About Us</button>
+                <button class="nav-btn" onclick="showModal('supportModal')">Support</button>
+                <button class="nav-btn" onclick="showModal('faqModal')">FAQ</button>
+                <button class="nav-btn" onclick="checkRewards()">My Rewards</button>
+            </div>
+        </div>
 
-<div class="ussd-box">
-  <!-- Header with clickable icons -->
-  <div class="ussd-header">
-    <a href="tel:+254718369524" title="Call for Help">
-      <!-- Phone SVG -->
-      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 
-                 19.79 19.79 0 0 1-8.63-3.07 
-                 19.5 19.5 0 0 1-6-6 
-                 19.79 19.79 0 0 1-3.07-8.63 
-                 A2 2 0 0 1 4.11 2h3a2 2 0 0 1 
-                 2 1.72c.13.95.37 1.87.72 2.75a2 2 
-                 0 0 1-.45 2.11l-1.27 1.27a16 
-                 16 0 0 0 6 6l1.27-1.27a2 2 
-                 0 0 1 2.11-.45c.88.35 
-                 1.8.59 2.75.72A2 2 0 0 1 
-                 22 16.92z"/>
-      </svg>
-    </a>
-    <a href="https://wa.me/254718369524" target="_blank" title="WhatsApp Chat">
-      <!-- WhatsApp SVG -->
-      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512">
-        <path d="M380.9 97.1C339-22.1 
-                 202.6-31.9 131.5 39.3c-59.7 59.7-70.6 
-                 152.3-26.3 224.5l-27.1 99.6 
-                 102-26.7c70.6 38.2 160.3 22.6 
-                 218.1-35.2c70.2-70.1 59.4-186.6 
-                 -17.3-248.4zM224.1 339c-28.2 0-55.8-7.5-80.1-21.7l-5.7-3.4-60.5 
-                 15.8 16.1-58.9-3.7-6C61.5 234.3 54 206.6 
-                 54 178.3c0-93.1 76-169 169.8-169c45.2 
-                 0 87.7 17.6 119.7 49.6s49.5 74.6 
-                 49.5 119.7c0 93.8-75.9 169.8-169.8 169.8zm93.4-121.6c-5.1-2.6-30.1-14.9-34.7-16.6s-8.1-2.6-11.5 
-                 2.6-13.2 16.6-16.2 20s-6 
-                 3.9-11.1 1.3s-21.6-8-41.1-25.6c-15.2-13.5-25.5-30.1-28.5-35.2s-.3-7.8 
-                 2.3-10.4c2.3-2.3 5.1-6 7.7-9s3.4-5.1 
-                 5.1-8.6.9-6.5-.4-9.1c-1.3-2.6-11.5-27.7-15.8-37.9s-8.4-8.1-11.5-8.3-6.5-.2-10-.2-9.1 
-                 1.3-13.9 6.5c-4.8 5.1-18.3 
-                 17.9-18.3 43.6s18.7 50.6 21.3 
-                 54.1c2.6 3.5 36.9 56.4 89.4 
-                 79.1 12.5 5.4 22.3 8.6 29.9 
-                 11s14.3 1.8 19.6 1.1c6-1 30-12.3 
-                 34.2-24.2s4.2-22.1 2.9-24.2-4.7-3.5-9.8-6.1z"/>
-      </svg>
-    </a>
-  </div>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Purchase Card -->
+            <div class="card">
+                <h2>🚀 Buy Airtime</h2>
+                <form id="purchaseForm">
+                    <div class="form-group">
+                        <label for="paymentNumber">Payment Phone Number *</label>
+                        <div style="position: relative;">
+                            <span class="phone-prefix">+254</span>
+                            <input type="tel" 
+                                   id="paymentNumber" 
+                                   class="form-control phone-input" 
+                                   placeholder="712345678" 
+                                   required>
+                        </div>
+                        <div class="error-message" id="paymentNumberError"></div>
+                    </div>
 
-  <div class="ussd-text" id="ussdText"></div>
-  <div class="divider"></div>
-  <div class="input-area">
-    <input id="ussdInput" placeholder="" />
-  </div>
-  <div class="buttons">
-    <div class="btn send" id="sendBtn" onclick="sendInput()">Send</div>
-  </div>
-</div>
+                    <div class="form-group">
+                        <label for="airtimeNumber">Airtime Phone Number (Optional)</label>
+                        <div style="position: relative;">
+                            <span class="phone-prefix">+254</span>
+                            <input type="tel" 
+                                   id="airtimeNumber" 
+                                   class="form-control phone-input" 
+                                   placeholder="712345678 (Leave empty to send to payment number)">
+                        </div>
+                        <div class="error-message" id="airtimeNumberError"></div>
+                    </div>
 
-<script>
-  const backend = "https://airtimepurchase.onrender.com"; 
-  let step = 0, paymentNumber = "", airtimeNumber = "", amount = "", reference = "";
-  let retryDetails = null;
+                    <div class="form-group">
+                        <label for="amount">Amount (KES) *</label>
+                        <input type="number" 
+                               id="amount" 
+                               class="form-control" 
+                               placeholder="Enter amount (Min: 10, Max: 10000)" 
+                               min="10" 
+                               max="10000" 
+                               required>
+                        <div class="error-message" id="amountError"></div>
+                    </div>
 
-  const textBox = document.getElementById("ussdText");
-  const inputBox = document.getElementById("ussdInput");
-  const sendBtn = document.getElementById("sendBtn");
+                    <div class="feature-highlight">
+                        <strong>💰 Get 5% Bonus Airtime + Reward Points!</strong>
+                        <br><small>Earn 1 point per 100 KES spent • Redeem 100 points = 10 KES airtime</small>
+                    </div>
 
-  function show(msg, clear=true, disable=false, placeholder="") {
-    textBox.innerText = msg;
-    if (clear) inputBox.value = "";
-    inputBox.placeholder = placeholder;
-    inputBox.disabled = disable;
-    sendBtn.classList.toggle("disabled", disable);
-    if (!disable) inputBox.focus();
-  }
+                    <button type="submit" class="btn-primary" id="purchaseBtn">
+                        <span id="btnText">Buy Airtime via M-Pesa</span>
+                        <div class="loading" id="btnLoading">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+                </form>
 
-  function resetFlow() {
-    step = 0;
-    paymentNumber = airtimeNumber = amount = reference = "";
-    retryDetails = null;
-    show("0) Safaricom Airtime\n1) Airtel Airtime\n\nChoose option:\n(# = Back, * = Cancel)", true, false, "Enter option (0 or 1)");
-  }
+                <!-- Transaction Status -->
+                <div class="status-section" id="statusSection">
+                    <h3>Transaction Status</h3>
+                    <div id="statusContent"></div>
+                    <button class="btn-primary" onclick="hideStatus()" style="margin-top: 15px; background: #6c757d;">Close</button>
+                </div>
+            </div>
 
-  function isValidPhone(num) {
-    return /^0\d{9}$/.test(num) || /^254\d{9}$/.test(num);
-  }
+            <!-- Rewards Card -->
+            <div class="card">
+                <h2>🎁 Rewards & Points</h2>
+                <div id="rewardsContent">
+                    <div class="rewards-info">
+                        <div>Your Points Balance</div>
+                        <div class="points-display" id="pointsBalance">0</div>
+                        <small>Earn points with every purchase!</small>
+                    </div>
 
-  function isValidAmount(val) {
-    const n = Number(val);
-    return !isNaN(n) && n >= 5 && n <= 500;
-  }
+                    <div class="redeem-section">
+                        <h4>Redeem Points for Airtime</h4>
+                        <form id="redeemForm">
+                            <div class="form-group">
+                                <label for="redeemPhone">Phone Number for Airtime</label>
+                                <div style="position: relative;">
+                                    <span class="phone-prefix">+254</span>
+                                    <input type="tel" 
+                                           id="redeemPhone" 
+                                           class="form-control phone-input" 
+                                           placeholder="712345678">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="redeemPoints">Points to Redeem (Min: 100)</label>
+                                <input type="number" 
+                                       id="redeemPoints" 
+                                       class="form-control" 
+                                       placeholder="Enter points (100 points = 10 KES)" 
+                                       min="100" 
+                                       step="100">
+                            </div>
+                            <button type="submit" class="btn-primary">Redeem Points</button>
+                        </form>
+                    </div>
 
-  async function sendInput() {
-    const val = inputBox.value.trim();
+                    <div class="transaction-history" id="transactionHistory">
+                        <h4>Recent Activity</h4>
+                        <div id="historyContent">
+                            <p style="text-align: center; color: #666;">No activity yet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    // Handle special keys
-    if (val === "*") { resetFlow(); return; }
-    if (val === "#" && step > 0) { step--; backStep(); return; }
+    <!-- About Modal -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>About Etopup</h2>
+            <p>Welcome to <strong>Etopup</strong> - Kenya's premier airtime top-up service!</p>
+            <br>
+            <h3>Why Choose Etopup?</h3>
+            <ul style="padding-left: 20px; margin: 15px 0;">
+                <li>✅ Instant airtime delivery</li>
+                <li>💰 5% bonus airtime on every purchase</li>
+                <li>🎁 Earn reward points with every transaction</li>
+                <li>🔒 Secure M-Pesa integration</li>
+                <li>⚡ Lightning-fast processing</li>
+                <li>📱 Support for all Kenyan networks</li>
+                <li>🏆 24/7 customer support</li>
+            </ul>
+            <br>
+            <p><strong>How it works:</strong></p>
+            <ol style="padding-left: 20px; margin: 15px 0;">
+                <li>Enter your M-Pesa number and amount</li>
+                <li>Complete payment via STK push</li>
+                <li>Receive airtime + 5% bonus instantly</li>
+                <li>Earn points for future redemptions</li>
+            </ol>
+            <br>
+            <p>Join thousands of satisfied customers who trust Etopup for their airtime needs!</p>
+        </div>
+    </div>
 
-    if (step === 0) {
-      if (val === "0") { step = 1; show("Enter Safaricom number to receive airtime:\n(# = Back, * = Cancel)", true, false, "07xxxxxxxx"); }
-      else if (val === "1") { step = 1; show("Enter Airtel number to receive airtime:\n(# = Back, * = Cancel)", true, false, "073xxxxxxxx"); }
-      else show("0) Safaricom Airtime\n1) Airtel Airtime\n\nChoose option:\n(# = Back, * = Cancel)", false, false, "Enter option (0 or 1)");
-    }
-    else if (step === 1) {
-      if (!isValidPhone(val)) { show("❌ Invalid number.\nEnter again:\n(# = Back, * = Cancel)", true, false, "07xxxxxxxx"); return; }
-      airtimeNumber = val; step = 2; show("Enter Safaricom number to pay (M-Pesa):\n(# = Back, * = Cancel)", true, false, "07xxxxxxxx");
-    }
-    else if (step === 2) {
-      if (!isValidPhone(val)) { show("❌ Invalid Safaricom number.\nEnter again:\n(# = Back, * = Cancel)", true, false, "07xxxxxxxx"); return; }
-      paymentNumber = val; step = 3; show("Enter amount (KES 5 - 500):\n(# = Back, * = Cancel)", true, false, "e.g. 100");
-    }
-    else if (step === 3) {
-      if (!isValidAmount(val)) { show("❌ Invalid amount. Must be 5 - 500.\nEnter again:\n(# = Back, * = Cancel)", true, false, "e.g. 50"); return; }
-      amount = val; step = 4; submitPurchase();
-    }
-    else if (step === 5) {
-      if (val === "1" && retryDetails) {
-        // Retry with same details
-        paymentNumber = retryDetails.paymentNumber;
-        airtimeNumber = retryDetails.airtimeNumber;
-        amount = retryDetails.amount;
-        step = 4;
-        submitPurchase();
-      } else if (val === "*") {
-        resetFlow();
-      } else {
-        show("❌ Invalid choice.\n1) Retry\n* Home", true, false, "Enter option");
-      }
-    }
-  }
+    <!-- Support Modal -->
+    <div id="supportModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Customer Support</h2>
+            <p>Need help? We're here for you 24/7!</p>
+            <br>
+            <div class="feature-highlight">
+                <h3>📞 Contact Us</h3>
+                <p><strong>Phone:</strong> +254 700 123 456</p>
+                <p><strong>WhatsApp:</strong> +254 700 123 456</p>
+                <p><strong>Email:</strong> support@etopup.com</p>
+                <p><strong>Hours:</strong> 24/7 Customer Support</p>
+            </div>
+            <br>
+            <div class="feature-highlight">
+                <h3>🛠️ Common Issues</h3>
+                <p><strong>Payment failed?</strong> Check your M-Pesa balance and try again.</p>
+                <p><strong>Airtime delayed?</strong> Usually processed within 30 seconds.</p>
+                <p><strong>Points missing?</strong> Refresh your rewards balance.</p>
+                <p><strong>Wrong number?</strong> Contact support immediately.</p>
+            </div>
+            <br>
+            <p>We guarantee 100% satisfaction or full refund!</p>
+        </div>
+    </div>
 
-  function backStep() {
-    if (step === 0) resetFlow();
-    else if (step === 1) show("0) Safaricom Airtime\n1) Airtel Airtime\n\nChoose option:\n(# = Back, * = Cancel)", true, false, "Enter option (0 or 1)");
-    else if (step === 2) show("Enter receiver number:\n(# = Back, * = Cancel)", true, false, "07xxxxxxxx");
-    else if (step === 3) show("Enter Safaricom number to pay (M-Pesa):\n(# = Back, * = Cancel)", true, false, "07xxxxxxxx");
-  }
+    <!-- FAQ Modal -->
+    <div id="faqModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Frequently Asked Questions</h2>
+            <br>
+            <div class="feature-highlight">
+                <h4>Q: How do I get the 5% bonus airtime?</h4>
+                <p>A: The bonus is automatically added to your airtime purchase. No extra steps needed!</p>
+            </div>
+            <div class="feature-highlight">
+                <h4>Q: How do reward points work?</h4>
+                <p>A: You earn 1 point for every 100 KES spent. Redeem 100 points for 10 KES airtime.</p>
+            </div>
+            <div class="feature-highlight">
+                <h4>Q: What networks are supported?</h4>
+                <p>A: All Kenyan networks - Safaricom, Airtel, Telkom, and others.</p>
+            </div>
+            <div class="feature-highlight">
+                <h4>Q: Is my money safe?</h4>
+                <p>A: Yes! We use secure M-Pesa integration with end-to-end encryption.</p>
+            </div>
+            <div class="feature-highlight">
+                <h4>Q: How fast is airtime delivery?</h4>
+                <p>A: Usually within 30 seconds, maximum 5 minutes during peak times.</p>
+            </div>
+            <div class="feature-highlight">
+                <h4>Q: Can I send airtime to a different number?</h4>
+                <p>A: Yes! Use the "Airtime Phone Number" field to specify a different recipient.</p>
+            </div>
+        </div>
+    </div>
 
-  async function submitPurchase() {
-    show(`📡 Check phone for STK Push\nSend KES ${amount} from ${paymentNumber}\nto buy airtime for ${airtimeNumber}`, true, true);
-    retryDetails = { paymentNumber, airtimeNumber, amount };
-    try {
-      const resp = await fetch(`${backend}/purchase`, {
-        method:"POST", headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({ payment_number: paymentNumber, airtime_number: airtimeNumber, amount: amount })
-      });
-      const data = await resp.json();
-      if (!data.success || !data.reference) { show("❌ Failed to init payment.\n1) Retry\n* Home", true, false, "Enter option"); step = 5; return; }
-      reference = data.reference; pollStatus();
-    } catch (err) { show("⚠️ Error: " + err.message + "\n1) Retry\n* Home", true, false, "Enter option"); step = 5; }
-  }
+    <!-- Rewards Modal -->
+    <div id="rewardsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>My Rewards</h2>
+            <div id="rewardsModalContent">
+                Loading rewards...
+            </div>
+        </div>
+    </div>
 
-  function pollStatus() {
-    let attempts = 0;
-    const poll = setInterval(async () => {
-      attempts++;
-      try {
-        const res = await fetch(`${backend}/api/status/${reference}`);
-        const s = await res.json();
-        if (s.success) {
-          if (s.airtime === "success" || s.paycenta.status === "success") {
-            clearInterval(poll);
-            show(`✅ Airtime Purchase Successful\nAmount: KES ${amount}\nPaid by: ${paymentNumber}\nAirtime to: ${airtimeNumber}\nRef: ${reference}`, false, true);
-            setTimeout(() => resetFlow(), 8000); // auto-home after 8s
-          } else if (s.airtime === "failed" || ["failed","cancelled"].includes(s.paycenta.status)) {
-            clearInterval(poll);
-            show("❌ Transaction failed.\n1) Retry\n* Home", true, false, "Enter option");
-            step = 5;
-          }
+    <script>
+        // Configuration
+        const API_BASE_URL = 'https://airtimepurchase.onrender.com';
+        
+        // Global variables
+        let currentTransactionRef = null;
+        let statusCheckInterval = null;
+
+        // DOM Elements
+        const purchaseForm = document.getElementById('purchaseForm');
+        const redeemForm = document.getElementById('redeemForm');
+        const purchaseBtn = document.getElementById('purchaseBtn');
+        const btnText = document.getElementById('btnText');
+        const btnLoading = document.getElementById('btnLoading');
+        const statusSection = document.getElementById('statusSection');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+            loadUserRewards();
+        });
+
+        function setupEventListeners() {
+            // Purchase form
+            purchaseForm.addEventListener('submit', handlePurchase);
+            
+            // Redeem form
+            redeemForm.addEventListener('submit', handleRedeem);
+            
+            // Phone number formatting
+            document.getElementById('paymentNumber').addEventListener('input', formatPhoneNumber);
+            document.getElementById('airtimeNumber').addEventListener('input', formatPhoneNumber);
+            document.getElementById('redeemPhone').addEventListener('input', formatPhoneNumber);
+            
+            // Amount validation
+            document.getElementById('amount').addEventListener('input', validateAmount);
+            
+            // Modal events
+            setupModalEvents();
+            
+            // Auto-refresh points every 30 seconds
+            setInterval(loadUserRewards, 30000);
         }
-      } catch (err) { show("⚠️ Poll error: " + err.message + "\n1) Retry\n* Home", false, false, "Enter option"); step = 5; }
-      if (attempts >= 40) {
-        clearInterval(poll);
-        show("⏰ Timeout. Check SMS for confirmation.\n1) Retry\n* Home", false, false, "Enter option");
-        step = 5;
-      }
-    }, 5000);
-  }
 
-  resetFlow();
-</script>
+        function setupModalEvents() {
+            // Close modal when clicking X
+            document.querySelectorAll('.close').forEach(closeBtn => {
+                closeBtn.addEventListener('click', function() {
+                    this.closest('.modal').style.display = 'none';
+                });
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target.classList.contains('modal')) {
+                    event.target.style.display = 'none';
+                }
+            });
+        }
 
+        // Phone number formatting and validation
+        function formatPhoneNumber(event) {
+            const input = event.target;
+            let value = input.value.replace(/\D/g, '');
+            
+            // Remove leading zeros or 254
+            if (value.startsWith('0')) {
+                value = value.substring(1);
+            }
+            if (value.startsWith('254')) {
+                value = value.substring(3);
+            }
+            
+            // Limit to 9 digits after 254
+            if (value.length > 9) {
+                value = value.substring(0, 9);
+            }
+            
+            input.value = value;
+            
+            // Validate phone number
+            validatePhoneNumber(input);
+        }
+
+        function validatePhoneNumber(input) {
+            const value = input.value;
+            const errorElement = document.getElementById(input.id + 'Error');
+            
+            if (value && (value.length !== 9 || !value.match(/^[17]/))) {
+                showFieldError(input, errorElement, 'Enter valid Kenyan phone number (7XX or 1XX)');
+                return false;
+            } else {
+                hideFieldError(input, errorElement);
+                return true;
+            }
+        }
+
+        function validateAmount() {
+            const amountInput = document.getElementById('amount');
+            const amount = parseFloat(amountInput.value);
+            const errorElement = document.getElementById('amountError');
+            
+            if (amountInput.value && (isNaN(amount) || amount < 10 || amount > 10000)) {
+                showFieldError(amountInput, errorElement, 'Amount must be between 10 and 10,000 KES');
+                return false;
+            } else {
+                hideFieldError(amountInput, errorElement);
+                return true;
+            }
+        }
+
+        function showFieldError(input, errorElement, message) {
+            input.classList.add('error');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        function hideFieldError(input, errorElement) {
+            input.classList.remove('error');
+            errorElement.style.display = 'none';
+        }
+
+        // Purchase functionality
+        async function handlePurchase(event) {
+            event.preventDefault();
+            
+            const paymentNumber = document.getElementById('paymentNumber').value;
+            const airtimeNumber = document.getElementById('airtimeNumber').value;
+            const amount = document.getElementById('amount').value;
+            
+            // Validate form
+            if (!validateForm()) {
+                return;
+            }
+            
+            // Show loading state
+            setLoadingState(true);
+            
+            try {
+                const payload = {
+                    payment_number: formatPhoneForAPI(paymentNumber),
+                    amount: parseFloat(amount)
+                };
+                
+                if (airtimeNumber.trim()) {
+                    payload.airtime_number = formatPhoneForAPI(airtimeNumber);
+                }
+                
+                const response = await fetch(`${API_BASE_URL}/purchase`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    currentTransactionRef = result.reference;
+                    showToast('success', '🎉 Purchase initiated! Check your phone for M-Pesa prompt.');
+                    showTransactionStatus(result.reference);
+                    startStatusPolling(result.reference);
+                } else {
+                    showToast('error', result.message || 'Purchase failed. Please try again.');
+                }
+                
+            } catch (error) {
+                console.error('Purchase error:', error);
+                showToast('error', 'Network error. Please check your connection and try again.');
+            } finally {
+                setLoadingState(false);
+            }
+        }
+
+        function validateForm() {
+            const paymentNumber = document.getElementById('paymentNumber').value;
+            const amount = document.getElementById('amount').value;
+            
+            let isValid = true;
+            
+            // Validate payment number
+            if (!paymentNumber) {
+                showFieldError(
+                    document.getElementById('paymentNumber'),
+                    document.getElementById('paymentNumberError'),
+                    'Payment phone number is required'
+                );
+                isValid = false;
+            } else if (!validatePhoneNumber(document.getElementById('paymentNumber'))) {
+                isValid = false;
+            }
+            
+            // Validate amount
+            if (!amount) {
+                showFieldError(
+                    document.getElementById('amount'),
+                    document.getElementById('amountError'),
+                    'Amount is required'
+                );
+                isValid = false;
+            } else if (!validateAmount()) {
+                isValid = false;
+            }
+            
+            // Validate airtime number if provided
+            const airtimeNumber = document.getElementById('airtimeNumber').value;
+            if (airtimeNumber && !validatePhoneNumber(document.getElementById('airtimeNumber'))) {
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+
+        function formatPhoneForAPI(phoneNumber) {
+            if (!phoneNumber) return '';
+            let cleaned = phoneNumber.replace(/\D/g, '');
+            if (cleaned.startsWith('0')) {
+                return '254' + cleaned.substring(1);
+            }
+            if (!cleaned.startsWith('254')) {
+                return '254' + cleaned;
+            }
+            return cleaned;
+        }
+
+        function setLoadingState(loading) {
+            if (loading) {
+                purchaseBtn.disabled = true;
+                btnText.style.display = 'none';
+                btnLoading.style.display = 'block';
+            } else {
+                purchaseBtn.disabled = false;
+                btnText.style.display = 'block';
+                btnLoading.style.display = 'none';
+            }
+        }
+
+        // Transaction status monitoring
+        function showTransactionStatus(reference) {
+            statusSection.style.display = 'block';
+            statusSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function startStatusPolling(reference) {
+            if (statusCheckInterval) {
+                clearInterval(statusCheckInterval);
+            }
+            
+            statusCheckInterval = setInterval(async () => {
+                await checkTransactionStatus(reference);
+            }, 3000);
+            
+            // Stop polling after 10 minutes
+            setTimeout(() => {
+                if (statusCheckInterval) {
+                    clearInterval(statusCheckInterval);
+                    statusCheckInterval = null;
+                }
+            }, 600000);
+        }
+
+        async function checkTransactionStatus(reference) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/status/${reference}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    updateStatusDisplay(result);
+                    
+                    // Stop polling if transaction is complete
+                    if (result.paycenta.status === 'success' && result.airtime === 'success') {
+                        clearInterval(statusCheckInterval);
+                        statusCheckInterval = null;
+                        showToast('success', '🎉 Transaction completed! Airtime delivered successfully.');
+                        loadUserRewards(); // Refresh rewards
+                    } else if (result.paycenta.status === 'failed' || result.airtime === 'failed') {
+                        clearInterval(statusCheckInterval);
+                        statusCheckInterval = null;
+                        showToast('error', 'Transaction failed. Please try again or contact support.');
+                    }
+                }
+            } catch (error) {
+                console.error('Status check error:', error);
+            }
+        }
+
+        function updateStatusDisplay(status) {
+            const statusContent = document.getElementById('statusContent');
+            
+            statusContent.innerHTML = `
+                <div class="status-item">
+                    <span>Transaction ID:</span>
+                    <span style="font-family: monospace;">${status.reference}</span>
+                </div>
+                <div class="status-item">
+                    <span>Payment Status:</span>
+                    <span class="status-badge status-${status.paycenta.status}">${status.paycenta.status}</span>
+                </div>
+                <div class="status-item">
+                    <span>Airtime Status:</span>
+                    <span class="status-badge status-${status.airtime}">${status.airtime}</span>
+                </div>
+                <div class="status-item">
+                    <span>Amount:</span>
+                    <span>KES ${status.amount}</span>
+                </div>
+                <div class="status-item">
+                    <span>Bonus Airtime:</span>
+                    <span>${status.bonusSent ? '✅ Sent' : '⏳ Processing'}</span>
+                </div>
+            `;
+        }
+
+        function hideStatus() {
+            statusSection.style.display = 'none';
+            if (statusCheckInterval) {
+                clearInterval(statusCheckInterval);
+                statusCheckInterval = null;
+            }
+        }
+
+        // Rewards functionality
+        async function loadUserRewards() {
+            const paymentNumber = document.getElementById('paymentNumber').value;
+            if (!paymentNumber) return;
+            
+            try {
+                const formattedPhone = formatPhoneForAPI(paymentNumber);
+                const response = await fetch(`${API_BASE_URL}/rewards/${formattedPhone}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    updateRewardsDisplay(result);
+                }
+            } catch (error) {
+                console.error('Error loading rewards:', error);
+            }
+        }
+
+        function updateRewardsDisplay(rewards) {
+            document.getElementById('pointsBalance').textContent = rewards.points.toLocaleString();
+            
+            // Update transaction history
+            const historyContent = document.getElementById('historyContent');
+            
+            if (rewards.history && rewards.history.length > 0) {
+                historyContent.innerHTML = rewards.history.slice(-5).reverse().map(item => {
+                    const date = new Date(item.at).toLocaleDateString();
+                    const type = item.type === 'earn' ? '📈' : '📉';
+                    const points = item.type === 'earn' ? `+${item.points}` : `${item.points}`;
+                    const color = item.type === 'earn' ? '#4CAF50' : '#ff9800';
+                    
+                    return `
+                        <div class="history-item">
+                            <span>${type} ${item.type === 'earn' ? 'Earned' : 'Redeemed'}</span>
+                            <span style="color: ${color}; font-weight: bold;">${points} pts</span>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                historyContent.innerHTML = '<p style="text-align: center; color: #666;">No activity yet</p>';
+            }
+        }
+
+        async function handleRedeem(event) {
+            event.preventDefault();
+            
+            const phone = document.getElementById('redeemPhone').value;
+            const points = document.getElementById('redeemPoints').value;
+            
+            if (!phone || !points) {
+                showToast('error', 'Please fill in all fields');
+                return;
+            }
+            
+            if (parseInt(points) < 100) {
+                showToast('error', 'Minimum 100 points required for redemption');
+                return;
+            }
+            
+            try {
+                const payload = {
+                    phone: formatPhoneForAPI(phone),
+                    points: parseInt(points)
+                };
+                
+                const response = await fetch(`${API_BASE_URL}/reward/redeem`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showToast('success', `🎉 Redeemed ${result.pointsUsed} points for KES ${result.airtimeKES} airtime!`);
+                    document.getElementById('redeemForm').reset();
+                    loadUserRewards();
+                } else {
+                    showToast('error', result.message || 'Redemption failed');
+                }
+                
+            } catch (error) {
+                console.error('Redeem error:', error);
+                showToast('error', 'Network error. Please try again.');
+            }
+        }
+
+        async function checkRewards() {
+            const paymentNumber = document.getElementById('paymentNumber').value;
+            
+            if (!paymentNumber) {
+                showToast('warning', 'Please enter your phone number first');
+                return;
+            }
+            
+            await loadUserRewards();
+            showModal('rewardsModal');
+            
+            // Load detailed rewards in modal
+            try {
+                const formattedPhone = formatPhoneForAPI(paymentNumber);
+                const response = await fetch(`${API_BASE_URL}/rewards/${formattedPhone}`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    document.getElementById('rewardsModalContent').innerHTML = `
+                        <div class="rewards-info">
+                            <h3>Points Balance: ${result.points.toLocaleString()}</h3>
+                            <p>Equivalent to: KES ${Math.floor(result.points / 100) * 10} airtime</p>
+                        </div>
+                        <div class="transaction-history">
+                            <h4>Transaction History</h4>
+                            ${result.history.map(item => {
+                                const date = new Date(item.at).toLocaleString();
+                                const type = item.type === 'earn' ? '📈 Earned' : '📉 Redeemed';
+                                return `
+                                    <div class="history-item">
+                                        <div>
+                                            <strong>${type}</strong><br>
+                                            <small>${date}</small>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <strong>${item.points} pts</strong><br>
+                                            <small>KES ${item.amount}</small>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('') || '<p>No history available</p>'}
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error loading detailed rewards:', error);
+            }
+        }
+
+        // Modal functions
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        // Toast notifications
+        function showToast(type, message, duration = 5000) {
+            // Remove existing toasts
+            const existingToasts = document.querySelectorAll('.toast');
+            existingToasts.forEach(toast => toast.remove());
+            
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            // Trigger animation
+            setTimeout(() => toast.classList.add('show'), 100);
+            
+            // Auto remove
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, duration);
+        }
+
+        // Auto-fill redeem phone from payment phone
+        document.getElementById('paymentNumber').addEventListener('input', function() {
+            if (this.value && !document.getElementById('redeemPhone').value) {
+                document.getElementById('redeemPhone').value = this.value;
+            }
+        });
+
+        // Clear form function
+        function clearForm() {
+            document.getElementById('purchaseForm').reset();
+            hideStatus();
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(event) {
+            // Escape key to close modals
+            if (event.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
+        });
+
+        // Auto-refresh rewards on focus
+        window.addEventListener('focus', function() {
+            loadUserRewards();
+        });
+    </script>
 </body>
-</html>
+                  </html>
