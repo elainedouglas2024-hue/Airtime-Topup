@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Etopup - Premium Airtime Top-up Service</title>
+    <title>Etopup - Airtime Top-up Service</title>
     <style>
         * {
             margin: 0;
@@ -15,160 +15,283 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
+            padding-bottom: 60px;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Header */
         .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            text-align: center;
+            background: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .logo {
-            font-size: 2.5rem;
+            width: 40px;
+            height: 40px;
+        }
+
+        .site-name {
+            font-size: 24px;
             font-weight: bold;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
+            color: #667eea;
         }
 
-        .nav {
-            margin-top: 20px;
-        }
-
-        .nav-btn {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            margin: 0 10px;
-            border-radius: 25px;
+        .hamburger {
             cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            padding: 10px;
         }
 
-        .nav-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: #333;
+            margin: 5px 0;
+            transition: 0.3s;
         }
 
-        /* Main Content */
-        .main-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 30px;
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 0 20px;
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-
-        .card h2 {
-            color: #667eea;
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
             margin-bottom: 20px;
-            font-size: 1.5rem;
-            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        /* Form Styling */
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .provider-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .provider-option {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .provider-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+
+        .provider-option.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .provider-option img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+            margin-bottom: 8px;
+        }
+
+        .provider-option span {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+
         .form-group {
             margin-bottom: 20px;
-            position: relative;
         }
 
-        .form-group label {
+        label {
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
-            color: #555;
+            color: #333;
+            font-size: 14px;
         }
 
-        .form-control {
+        .tooltip-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 16px;
+            font-size: 12px;
+            margin-left: 5px;
+            cursor: help;
+            position: relative;
+        }
+
+        .tooltip-icon:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            white-space: nowrap;
+            font-size: 12px;
+            z-index: 10;
+        }
+
+        input {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e1e5e9;
-            border-radius: 10px;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
             font-size: 16px;
-            transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.9);
+            transition: border-color 0.3s;
         }
 
-        .form-control:focus {
+        input:focus {
             outline: none;
             border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
-        .form-control.error {
-            border-color: #e74c3c;
-            background-color: #ffeaea;
+        input.error {
+            border-color: #f44336;
         }
 
         .error-message {
-            color: #e74c3c;
+            color: #f44336;
             font-size: 12px;
             margin-top: 5px;
             display: none;
         }
 
-        .btn-primary {
-            background: linear-gradient(45deg, #667eea, #764ba2);
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: bold;
             cursor: pointer;
-            width: 100%;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            transition: transform 0.2s;
         }
 
-        .btn-primary:hover {
+        .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
         }
 
-        .btn-primary:disabled {
+        .btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
         }
 
-        .loading {
+        /* Popup/Modal Styles */
+        .popup-overlay {
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .popup-overlay.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .popup-content {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-btn {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            line-height: 30px;
+            text-align: center;
+        }
+
+        .popup-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+            padding-right: 30px;
+        }
+
+        .popup-text {
+            line-height: 1.6;
+            color: #666;
+        }
+
+        /* Loading Spinner */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .loading-overlay.active {
+            display: flex;
         }
 
         .spinner {
-            width: 20px;
-            height: 20px;
-            border: 2px solid #ffffff33;
-            border-top: 2px solid #ffffff;
-            border-radius: 50%;
+            width: 80px;
+            height: 80px;
             animation: spin 1s linear infinite;
         }
 
@@ -177,1633 +300,584 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Rewards Section */
-        .rewards-info {
-            background: linear-gradient(45deg, #ffd700, #ffed4e);
-            color: #333;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .points-display {
-            font-size: 2rem;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-
-        .redeem-section {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 15px;
-        }
-
-        /* News Section Below Main Content */
-        .news-section {
-            margin: 30px 0;
-        }
-
-        .news-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+        .loading-text {
+            color: white;
+            font-size: 18px;
             margin-top: 20px;
+            font-weight: 500;
         }
 
-        .news-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
+        /* News Section */
+        .news-section {
+            margin-top: 30px;
         }
 
-        .news-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .news-icon {
-            font-size: 2rem;
+        .news-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 15px;
         }
 
         .news-title {
+            font-size: 20px;
             font-weight: bold;
-            color: #667eea;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-        }
-
-        .news-preview {
-            color: #666;
-            font-size: 14px;
-        }
-
-        /* Testimonials Section */
-        .testimonials-section {
-            margin: 30px 0;
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .testimonial-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .testimonial-stars {
-            color: #ffd700;
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-
-        .testimonial-text {
-            font-style: italic;
-            margin-bottom: 15px;
-            color: #555;
-            line-height: 1.6;
-        }
-
-        .testimonial-author {
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .testimonial-location {
-            color: #888;
-            font-size: 14px;
-        }
-
-        /* Modal Styling */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background: white;
-            margin: 5% auto;
-            padding: 30px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 85vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            animation: modalAppear 0.3s ease-out;
-        }
-
-        @keyframes modalAppear {
-            from {
-                opacity: 0;
-                transform: scale(0.8) translateY(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            line-height: 1;
-        }
-
-        .close:hover {
-            color: #000;
-        }
-
-        /* Toast/Alert Styling */
-        .toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            min-width: 300px;
-            padding: 15px 20px;
-            border-radius: 10px;
             color: white;
-            font-weight: 500;
-            z-index: 1001;
-            transform: translateX(400px);
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .toast.show {
-            transform: translateX(0);
-        }
-
-        .toast.success {
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-        }
-
-        .toast.error {
-            background: linear-gradient(45deg, #f44336, #d32f2f);
-        }
-
-        .toast.warning {
-            background: linear-gradient(45deg, #ff9800, #f57c00);
-        }
-
-        .toast.info {
-            background: linear-gradient(45deg, #2196F3, #1976D2);
-        }
-
-        /* Fake Notification Popup */
-        .fake-notification {
-            position: fixed;
-            top: 100px;
-            right: 20px;
-            min-width: 280px;
-            padding: 12px 15px;
-            border-radius: 8px;
-            color: #333;
-            font-size: 14px;
-            z-index: 1002;
-            transform: translateX(400px);
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
-            background: linear-gradient(45deg, #e8f5e8, #f0f8f0);
-            border-left: 4px solid #4CAF50;
-        }
-
-        .fake-notification.show {
-            transform: translateX(0);
-        }
-
-        .fake-notification .notification-icon {
-            display: inline-block;
-            margin-right: 8px;
-            font-size: 16px;
-        }
-
-        /* Status Section */
-        .status-section {
-            margin-top: 20px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            display: none;
-        }
-
-        .status-item {
+        .news-controls {
             display: flex;
-            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .news-btn {
+            background: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            color: #667eea;
+        }
+
+        .news-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
             margin-bottom: 10px;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: transform 0.2s;
         }
 
-        .status-badge {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
+        .news-item:hover {
+            transform: translateX(5px);
         }
 
-        .status-pending {
-            background: #ff9800;
+        .news-item h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .news-item p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        /* Notification Ticker */
+        .notification-ticker {
+            position: fixed;
+            bottom: 60px;
+            left: 0;
+            width: 100%;
+            background: #4caf50;
             color: white;
+            padding: 10px 0;
+            overflow: hidden;
+            z-index: 99;
         }
 
-        .status-success {
-            background: #4CAF50;
-            color: white;
+        .ticker-content {
+            display: flex;
+            animation: scroll 20s linear infinite;
+            white-space: nowrap;
         }
 
-        .status-failed {
-            background: #f44336;
-            color: white;
+        .ticker-item {
+            padding: 0 50px;
+            font-size: 14px;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
         }
 
         /* Footer */
         .footer {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            margin-top: 40px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            background: white;
+            padding: 20px;
             text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
         }
 
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-bottom: 20px;
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
         }
 
-        .footer-section h3 {
+        .footer-links a {
             color: #667eea;
-            margin-bottom: 15px;
-        }
-
-        .footer-section ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 8px;
-        }
-
-        .footer-section ul li a {
-            color: #555;
             text-decoration: none;
-            transition: color 0.3s ease;
+            font-size: 12px;
         }
 
-        .footer-section ul li a:hover {
-            color: #667eea;
+        .footer-links a:hover {
+            text-decoration: underline;
         }
 
         .copyright {
-            border-top: 1px solid #eee;
-            padding-top: 20px;
-            color: #888;
-            font-size: 14px;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .main-content {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .testimonials-grid, .news-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .container {
-                padding: 15px;
-            }
-
-            .logo {
-                font-size: 2rem;
-            }
-
-            .nav-btn {
-                margin: 5px;
-                padding: 8px 15px;
-                font-size: 14px;
-            }
-
-            .modal-content {
-                margin: 5% auto;
-                width: 95%;
-                padding: 20px;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-        }
-
-        /* Additional Effects */
-        .feature-highlight {
-            background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.2));
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 15px;
-            margin: 10px 0;
-            transition: all 0.3s ease;
-        }
-
-        .feature-highlight:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .phone-prefix {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #667eea;
-            font-weight: bold;
-            pointer-events: none;
-        }
-
-        .phone-input {
-            padding-left: 50px !important;
-        }
-
-        .transaction-history {
-            max-height: 200px;
-            overflow-y: auto;
-            margin-top: 15px;
-        }
-
-        .history-item {
-            padding: 10px;
-            border-bottom: 1px solid #eee;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .history-item:last-child {
-            border-bottom: none;
-        }
-
-        .section-title {
-            text-align: center;
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
-            margin: 40px 0 20px 0;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .news-article {
-            margin-bottom: 20px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
-        }
-
-        .news-article h4 {
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-
-        .news-article .date {
-            color: #888;
             font-size: 12px;
-            margin-bottom: 10px;
+            color: #666;
+        }
+
+        @media (max-width: 480px) {
+            .provider-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+
+            .provider-option {
+                padding: 10px;
+            }
+
+            .provider-option img {
+                width: 50px;
+                height: 50px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo-container">
+            <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" fill="#667eea"/>
+                <path d="M30 50 L50 30 L70 50 L50 70 Z" fill="white"/>
+                <circle cx="50" cy="50" r="8" fill="#764ba2"/>
+                <path d="M50 25 Q65 35 50 50 Q35 35 50 25" fill="#ffd700" opacity="0.8"/>
+            </svg>
+            <span class="site-name">Etopup</span>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
     <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="logo">💎 Etopup</div>
-            <p>Premium Airtime Top-up Service with Instant Rewards</p>
-            <div class="nav">
-                <button class="nav-btn" onclick="showModal('aboutModal')">About Us</button>
-                <button class="nav-btn" onclick="showModal('supportModal')">Support</button>
-                <button class="nav-btn" onclick="showModal('faqModal')">FAQ</button>
-                <button class="nav-btn" onclick="showModal('refundModal')">Refund Policy</button>
-                <button class="nav-btn" onclick="showModal('newsModal')">📢 News</button>
-                <button class="nav-btn" onclick="checkRewards()">My Rewards</button>
-            </div>
-        </div>
-
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Purchase Card -->
-            <div class="card">
-                <h2>🚀 Buy Airtime</h2>
-                <form id="purchaseForm">
-                    <div class="form-group">
-                        <label for="paymentNumber">Payment Phone Number *</label>
-                        <div style="position: relative;">
-                            <span class="phone-prefix">+254</span>
-                            <input type="tel" 
-                                   id="paymentNumber" 
-                                   class="form-control phone-input" 
-                                   placeholder="712345678" 
-                                   required>
-                        </div>
-                        <div class="error-message" id="paymentNumberError"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="airtimeNumber">Airtime Phone Number (Optional)</label>
-                        <div style="position: relative;">
-                            <span class="phone-prefix">+254</span>
-                            <input type="tel" 
-                                   id="airtimeNumber" 
-                                   class="form-control phone-input" 
-                                   placeholder="712345678 (Leave empty to send to payment number)">
-                        </div>
-                        <div class="error-message" id="airtimeNumberError"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="amount">Amount (KES) *</label>
-                        <input type="number" 
-                               id="amount" 
-                               class="form-control" 
-                               placeholder="Enter amount (Min: 10, Max: 10000)" 
-                               min="10" 
-                               max="10000" 
-                               required>
-                        <div class="error-message" id="amountError"></div>
-                    </div>
-
-                    <div class="feature-highlight">
-                        <strong>💰 Get 5% Bonus Airtime + Reward Points!</strong>
-                        <br><small>Earn 1 point per 100 KES spent • Redeem 100 points = 10 KES airtime</small>
-                    </div>
-
-                    <button type="submit" class="btn-primary" id="purchaseBtn">
-                        <span id="btnText">Buy Airtime via M-Pesa</span>
-                        <div class="loading" id="btnLoading">
-                            <div class="spinner"></div>
-                        </div>
-                    </button>
-                </form>
-
-                <!-- Transaction Status -->
-                <div class="status-section" id="statusSection">
-                    <h3>Transaction Status</h3>
-                    <div id="statusContent"></div>
-                    <button class="btn-primary" onclick="hideStatus()" style="margin-top: 15px; background: #6c757d;">Close</button>
+        <!-- Provider Selection -->
+        <div class="card">
+            <div class="section-title">Select Provider</div>
+            <div class="provider-grid">
+                <div class="provider-option" onclick="selectProvider('safaricom')" id="provider-safaricom">
+                    <img src="safaricom.png" alt="Safaricom">
+                    <span>Safaricom</span>
                 </div>
-            </div>
-
-            <!-- Rewards Card -->
-            <div class="card">
-                <h2>🎁 Rewards & Points</h2>
-                <div id="rewardsContent">
-                    <div class="rewards-info">
-                        <div>Your Points Balance</div>
-                        <div class="points-display" id="pointsBalance">0</div>
-                        <small>Earn points with every purchase!</small>
-                    </div>
-
-                    <div class="redeem-section">
-                        <h4>Redeem Points for Airtime</h4>
-                        <form id="redeemForm">
-                            <div class="form-group">
-                                <label for="redeemPhone">Phone Number for Airtime</label>
-                                <div style="position: relative;">
-                                    <span class="phone-prefix">+254</span>
-                                    <input type="tel" 
-                                           id="redeemPhone" 
-                                           class="form-control phone-input" 
-                                           placeholder="712345678">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="redeemPoints">Points to Redeem (Min: 100)</label>
-                                <input type="number" 
-                                       id="redeemPoints" 
-                                       class="form-control" 
-                                       placeholder="Enter points (100 points = 10 KES)" 
-                                       min="100" 
-                                       step="100">
-                            </div>
-                            <button type="submit" class="btn-primary">Redeem Points</button>
-                        </form>
-                    </div>
-
-                    <div class="transaction-history" id="transactionHistory">
-                        <h4>Recent Activity</h4>
-                        <div id="historyContent">
-                            <p style="text-align: center; color: #666;">No activity yet</p>
-                        </div>
-                    </div>
+                <div class="provider-option" onclick="selectProvider('airtel')" id="provider-airtel">
+                    <img src="airtel.png" alt="Airtel">
+                    <span>Airtel</span>
+                </div>
+                <div class="provider-option" onclick="selectProvider('telkom')" id="provider-telkom">
+                    <img src="telkom.png" alt="Telkom">
+                    <span>Telkom</span>
                 </div>
             </div>
         </div>
 
-        <!-- News Section Below Main Content -->
-        <div class="section-title">📰 Latest News & Updates</div>
+        <!-- Purchase Form -->
+        <div class="card">
+            <div class="section-title">Top-up Details</div>
+            <form id="purchaseForm" onsubmit="handlePurchase(event)">
+                <div class="form-group">
+                    <label>
+                        Number to Buy Airtime
+                        <span class="tooltip-icon" data-tooltip="Enter the phone number to receive airtime">?</span>
+                    </label>
+                    <input type="tel" id="airtimeNumber" placeholder="e.g., 0712345678" required>
+                    <div class="error-message" id="airtimeNumberError">Please enter a valid phone number</div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Number to Pay for Airtime
+                        <span class="tooltip-icon" data-tooltip="Enter M-PESA number for payment">?</span>
+                    </label>
+                    <input type="tel" id="paymentNumber" placeholder="e.g., 0712345678" required>
+                    <div class="error-message" id="paymentNumberError">Please enter a valid phone number</div>
+                </div>
+
+                <div class="form-group">
+                    <label>
+                        Amount (KSH 5 - 200)
+                        <span class="tooltip-icon" data-tooltip="Minimum: 5 KSH, Maximum: 200 KSH + Get 5% Bonus!">?</span>
+                    </label>
+                    <input type="number" id="amount" placeholder="Enter amount" min="5" max="200" required>
+                    <div class="error-message" id="amountError">Amount must be between 5 and 200 KSH</div>
+                </div>
+
+                <button type="submit" class="btn" id="submitBtn">Purchase Airtime</button>
+            </form>
+        </div>
+
+        <!-- News Section -->
         <div class="news-section">
-            <div class="news-grid">
-                <div class="news-card" onclick="showNewsModal('news1')">
-                    <div class="news-icon">🎉</div>
-                    <div class="news-title">New Year Mega Bonus</div>
-                    <div class="news-preview">Get 10% extra bonus airtime on all purchases above 500 KES...</div>
-                </div>
-
-                <div class="news-card" onclick="showNewsModal('news2')">
-                    <div class="news-icon">🚀</div>
-                    <div class="news-title">All Networks Support</div>
-                    <div class="news-preview">Etopup now supports all major Kenyan networks including Safaricom...</div>
-                </div>
-
-                <div class="news-card" onclick="showNewsModal('news3')">
-                    <div class="news-icon">💎</div>
-                    <div class="news-title">Premium VIP Plans</div>
-                    <div class="news-preview">Introducing Premium Plans with 2x reward points for VIP customers...</div>
-                </div>
-
-                <div class="news-card" onclick="showNewsModal('news4')">
-                    <div class="news-icon">⚡</div>
-                    <div class="news-title">System Maintenance</div>
-                    <div class="news-preview">Scheduled maintenance on Jan 15, 2:00-3:00 AM. Service unaffected...</div>
-                </div>
-
-                <div class="news-card" onclick="showNewsModal('news5')">
-                    <div class="news-icon">🎁</div>
-                    <div class="news-title">Referral Program</div>
-                    <div class="news-preview">Refer friends and earn 50 bonus points for each successful referral...</div>
+            <div class="news-header">
+                <div class="news-title">Latest News</div>
+                <div class="news-controls">
+                    <button class="news-btn" onclick="changeNews(-1)">←</button>
+                    <button class="news-btn" onclick="changeNews(1)">→</button>
                 </div>
             </div>
+            <div id="newsContainer"></div>
         </div>
+    </div>
 
-        <!-- Testimonials Section -->
-        <div class="section-title">⭐ What Our Customers Say</div>
-        <div class="testimonials-section">
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                    <div class="testimonial-text">
-                        "Etopup is amazing! I get my airtime instantly and the bonus feature is incredible. I've saved so much money!"
-                    </div>
-                    <div class="testimonial-author">Mary Wanjiku</div>
-                    <div class="testimonial-location">Nairobi, Kenya</div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                    <div class="testimonial-text">
-                        "The reward points system is fantastic! I've already redeemed 500 points for free airtime. Highly recommended!"
-                    </div>
-                    <div class="testimonial-author">James Kipchoge</div>
-                    <div class="testimonial-location">Eldoret, Kenya</div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                    <div class="testimonial-text">
-                        "Super fast service! I can top up my family's phones in seconds. The customer support is also excellent."
-                    </div>
-                    <div class="testimonial-author">Grace Muthoni</div>
-                    <div class="testimonial-location">Mombasa, Kenya</div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                    <div class="testimonial-text">
-                        "I love the bonus airtime feature! Getting 5% extra on every purchase makes a real difference. Thank you Etopup!"
-                    </div>
-                    <div class="testimonial-author">Peter Otieno</div>
-                    <div class="testimonial-location">Kisumu, Kenya</div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                    <div class="testimonial-text">
-                        "Reliable and trustworthy service. I've been using Etopup for 6 months and never had any issues. Perfect!"
-                    </div>
-                    <div class="testimonial-author">Sarah Nyong'o</div>
-                    <div class="testimonial-location">Nakuru, Kenya</div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
-                    <div class="testimonial-text">
-                        "The best airtime service in Kenya! Easy to use, fast delivery, and great rewards. I tell all my friends about it."
-                    </div>
-                    <div class="testimonial-author">David Kamau</div>
-                    <div class="testimonial-location">Thika, Kenya</div>
-                </div>
-            </div>
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-links">
+            <a href="#" onclick="openPopup('about')">About Us</a>
+            <a href="#" onclick="openPopup('contact')">Contact Us</a>
+            <a href="#" onclick="openPopup('privacy')">Privacy Policy</a>
+            <a href="#" onclick="openPopup('refund')">Refund Policy</a>
+            <a href="#" onclick="openPopup('terms')">Terms & Conditions</a>
+            <a href="#" onclick="openPopup('faq')">FAQ</a>
         </div>
+        <div class="copyright">© 2024 Etopup. All Rights Reserved.</div>
+    </div>
 
-        <!-- Footer -->
-        <div class="footer">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a href="#" onclick="showModal('aboutModal')">About Us</a></li>
-                        <li><a href="#" onclick="showModal('faqModal')">FAQ</a></li>
-                        <li><a href="#" onclick="showModal('supportModal')">Support</a></li>
-                        <li><a href="#" onclick="showModal('refundModal')">Refund Policy</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Services</h3>
-                    <ul>
-                        <li><a href="#">Airtime Top-up</a></li>
-                        <li><a href="#">Reward Points</a></li>
-                        <li><a href="#">Bonus Airtime</a></li>
-                        <li><a href="#">Mobile Money</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>Contact</h3>
-                    <ul>
-                        <li>📞 +254 700 123 456</li>
-                        <li>📧 support@etopup.com</li>
-                        <li>💬 WhatsApp: +254 700 123 456</li>
-                        <li>🕒 24/7 Support</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2025 Etopup. All rights reserved. | Privacy Policy | Terms of Service</p>
-                <p>Licensed by Central Bank of Kenya | Secure SSL Encryption | PCI DSS Compliant</p>
+    <!-- Menu Popup -->
+    <div class="popup-overlay" id="menuPopup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup('menuPopup')">×</button>
+            <div class="popup-title">Menu</div>
+            <div class="popup-text">
+                <p style="margin-bottom: 15px;"><a href="#" onclick="openPopup('about')" style="color: #667eea; text-decoration: none; display: block; padding: 10px 0;">About Us</a></p>
+                <p style="margin-bottom: 15px;"><a href="#" onclick="openPopup('contact')" style="color: #667eea; text-decoration: none; display: block; padding: 10px 0;">Contact Us</a></p>
+                <p style="margin-bottom: 15px;"><a href="#" onclick="openPopup('privacy')" style="color: #667eea; text-decoration: none; display: block; padding: 10px 0;">Privacy Policy</a></p>
+                <p style="margin-bottom: 15px;"><a href="#" onclick="openPopup('refund')" style="color: #667eea; text-decoration: none; display: block; padding: 10px 0;">Refund Policy</a></p>
+                <p style="margin-bottom: 15px;"><a href="#" onclick="openPopup('how-to')" style="color: #667eea; text-decoration: none; display: block; padding: 10px 0;">How to Purchase</a></p>
+                <p style="margin-bottom: 15px;"><a href="#" onclick="openPopup('terms')" style="color: #667eea; text-decoration: none; display: block; padding: 10px 0;">Terms & Conditions</a></p>
+                <p style="margin-bottom: 15px;"><a href="#" onclick="openPopup('faq')" style="color: #667eea; text-decoration: none; display: block; padding: 10px 0;">FAQ</a></p>
             </div>
         </div>
     </div>
 
-    <!-- About Modal -->
-    <div id="aboutModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>About Etopup</h2>
-            <p>Welcome to <strong>Etopup</strong> - Kenya's premier airtime top-up service!</p>
-            <br>
-            <h3>Why Choose Etopup?</h3>
-            <ul style="padding-left: 20px; margin: 15px 0;">
-                <li>✅ Instant airtime delivery</li>
-                <li>💰 5% bonus airtime on every purchase</li>
-                <li>🎁 Earn reward points with every transaction</li>
-                <li>🔒 Secure M-Pesa integration</li>
-                <li>⚡ Lightning-fast processing</li>
-                <li>📱 Support for all Kenyan networks</li>
-                <li>🏆 24/7 customer support</li>
-            </ul>
-            <br>
-            <p><strong>How it works:</strong></p>
-            <ol style="padding-left: 20px; margin: 15px 0;">
-                <li>Enter your M-Pesa number and amount</li>
-                <li>Complete payment via STK push</li>
-                <li>Receive airtime + 5% bonus instantly</li>
-                <li>Earn points for future redemptions</li>
-            </ol>
-            <br>
-            <p>Join thousands of satisfied customers who trust Etopup for their airtime needs!</p>
+    <!-- Content Popups -->
+    <div class="popup-overlay" id="contentPopup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup('contentPopup')">×</button>
+            <div class="popup-title" id="popupTitle"></div>
+            <div class="popup-text" id="popupContent"></div>
         </div>
     </div>
 
-    <!-- Support Modal -->
-    <div id="supportModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Customer Support</h2>
-            <p>Need help? We're here for you 24/7!</p>
-            <br>
-            <div class="feature-highlight">
-                <h3>📞 Contact Us</h3>
-                <p><strong>Phone:</strong> +254 700 123 456</p>
-                <p><strong>WhatsApp:</strong> +254 700 123 456</p>
-                <p><strong>Email:</strong> support@etopup.com</p>
-                <p><strong>Hours:</strong> 24/7 Customer Support</p>
-            </div>
-            <br>
-            <div class="feature-highlight">
-                <h3>🛠️ Common Issues</h3>
-                <p><strong>Payment failed?</strong> Check your M-Pesa balance and try again.</p>
-                <p><strong>Airtime delayed?</strong> Usually processed within 30 seconds.</p>
-                <p><strong>Points missing?</strong> Refresh your rewards balance.</p>
-                <p><strong>Wrong number?</strong> Contact support immediately.</p>
-            </div>
-            <br>
-            <p>We guarantee 100% satisfaction or full refund!</p>
+    <!-- News Detail Popup -->
+    <div class="popup-overlay" id="newsPopup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup('newsPopup')">×</button>
+            <div class="popup-title" id="newsPopupTitle"></div>
+            <div class="popup-text" id="newsPopupContent"></div>
         </div>
     </div>
 
-    <!-- FAQ Modal -->
-    <div id="faqModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Frequently Asked Questions</h2>
-            <br>
-            <div class="feature-highlight">
-                <h4>Q: How do I get the 5% bonus airtime?</h4>
-                <p>A: The bonus is automatically added to your airtime purchase. No extra steps needed!</p>
-            </div>
-            <div class="feature-highlight">
-                <h4>Q: How do reward points work?</h4>
-                <p>A: You earn 1 point for every 100 KES spent. Redeem 100 points for 10 KES airtime.</p>
-            </div>
-            <div class="feature-highlight">
-                <h4>Q: What networks are supported?</h4>
-                <p>A: All Kenyan networks - Safaricom, Airtel, Telkom, and others.</p>
-            </div>
-            <div class="feature-highlight">
-                <h4>Q: Is my money safe?</h4>
-                <p>A: Yes! We use secure M-Pesa integration with end-to-end encryption.</p>
-            </div>
-            <div class="feature-highlight">
-                <h4>Q: How fast is airtime delivery?</h4>
-                <p>A: Usually within 30 seconds, maximum 5 minutes during peak times.</p>
-            </div>
-            <div class="feature-highlight">
-                <h4>Q: Can I send airtime to a different number?</h4>
-                <p>A: Yes! Use the "Airtime Phone Number" field to specify a different recipient.</p>
-            </div>
+    <!-- Receipt Popup -->
+    <div class="popup-overlay" id="receiptPopup">
+        <div class="popup-content">
+            <button class="close-btn" onclick="closePopup('receiptPopup')">×</button>
+            <div class="popup-title">Transaction Receipt</div>
+            <div class="popup-text" id="receiptContent"></div>
         </div>
     </div>
 
-    <!-- Refund Policy Modal -->
-    <div id="refundModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Refund Policy</h2>
-            <br>
-            <div class="feature-highlight">
-                <h3>🔄 Full Refund Guarantee</h3>
-                <p>At Etopup, we stand behind our service 100%. If you're not completely satisfied, we offer a full refund under the following conditions:</p>
-            </div>
-            <br>
-            <div class="feature-highlight">
-                <h4>✅ Eligible for Refund:</h4>
-                <ul style="padding-left: 20px; margin: 10px 0;">
-                    <li>• Airtime not delivered within 24 hours</li>
-                    <li>• Airtime sent to wrong number due to system error</li>
-                    <li>• Technical issues preventing transaction completion</li>
-                    <li>• Duplicate charges for same transaction</li>
-                    <li>• Service downtime exceeding 1 hour</li>
-                </ul>
-            </div>
-            <br>
-            <div class="feature-highlight">
-                <h4>📋 Refund Process:</h4>
-                <ol style="padding-left: 20px; margin: 10px 0;">
-                    <li>Contact support within 7 days of transaction</li>
-                    <li>Provide transaction reference number</li>
-                    <li>Our team will investigate within 24 hours</li>
-                    <li>Approved refunds processed within 3-5 business days</li>
-                    <li>Refunds credited back to original payment method</li>
-                </ol>
-            </div>
-            <br>
-            <div class="feature-highlight">
-                <h4>⚠️ Non-Refundable Situations:</h4>
-                <ul style="padding-left: 20px; margin: 10px 0;">
-                    <li>• Airtime successfully delivered to intended recipient</li>
-                    <li>• User error in entering phone number</li>
-                    <li>• Requests made after 7 days</li>
-                    <li>• Bonus airtime and reward points (non-transferable)</li>
-                </ul>
-            </div>
-            <br>
-            <div class="feature-highlight">
-                <h4>📞 Contact for Refunds:</h4>
-                <p><strong>Email:</strong> refunds@etopup.com</p>
-                <p><strong>WhatsApp:</strong> +254 700 123 456</p>
-                <p><strong>Response Time:</strong> Within 24 hours</p>
-            </div>
-            <br>
-            <p><em>This policy is designed to ensure fair treatment for all customers while maintaining service integrity.</em></p>
-        </div>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <svg class="spinner" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="45" fill="#667eea"/>
+            <path d="M30 50 L50 30 L70 50 L50 70 Z" fill="white"/>
+            <circle cx="50" cy="50" r="8" fill="#764ba2"/>
+            <path d="M50 25 Q65 35 50 50 Q35 35 50 25" fill="#ffd700" opacity="0.8"/>
+        </svg>
+        <div class="loading-text">Processing your request...</div>
+        <div class="loading-text" style="font-size: 14px; margin-top: 10px;">Please wait for M-PESA prompt</div>
     </div>
 
-    <!-- News Modal -->
-    <div id="newsModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>📢 Latest News & Updates</h2>
-            <div id="newsModalContent">
-                <div class="news-article">
-                    <h4>🎉 New Year Mega Bonus Campaign</h4>
-                    <div class="date">January 1, 2025</div>
-                    <p>We're excited to announce our biggest bonus campaign yet! For the entire month of January, get 10% extra bonus airtime on all purchases above 500 KES. This is in addition to our regular 5% bonus, meaning you'll get 15% total bonus airtime!</p>
-                    <p><strong>How to qualify:</strong> Simply make any airtime purchase of 500 KES or more during January 2025. The bonus will be automatically added to your airtime delivery.</p>
-                </div>
-
-                <div class="news-article">
-                    <h4>🚀 Universal Network Support</h4>
-                    <div class="date">December 28, 2024</div>
-                    <p>Great news! Etopup now supports ALL major Kenyan mobile networks including Safaricom, Airtel, Telkom Kenya, and Equitel. You can now top up any network using our unified platform.</p>
-                    <p><strong>Benefits:</strong> One platform for all networks, same great bonuses and rewards, instant delivery across all carriers.</p>
-                </div>
-
-                <div class="news-article">
-                    <h4>💎 Premium VIP Plans Launch</h4>
-                    <div class="date">December 25, 2024</div>
-                    <p>Introducing Etopup Premium! Our VIP customers now earn 2x reward points on every purchase and get priority customer support. Premium members also get exclusive access to special bonus campaigns.</p>
-                    <p><strong>Premium Benefits:</strong> 2x reward points, priority support, exclusive bonuses, monthly rewards, and early access to new features.</p>
-                </div>
-
-                <div class="news-article">
-                    <h4>⚡ Scheduled System Maintenance</h4>
-                    <div class="date">January 10, 2025</div>
-                    <p>We will be performing scheduled system maintenance on January 15, 2025, from 2:00 AM to 3:00 AM EAT. During this time, our servers will be upgraded for better performance.</p>
-                    <p><strong>Impact:</strong> No service interruption expected. All transactions will continue to process normally during maintenance.</p>
-                </div>
-
-                <div class="news-article">
-                    <h4>🎁 Referral Program Launch</h4>
-                    <div class="date">December 20, 2024</div>
-                    <p>Share the love and earn rewards! Our new referral program gives you 50 bonus points for each friend who signs up and makes their first purchase through your referral link.</p>
-                    <p><strong>How it works:</strong> Share your unique referral code, your friend gets 5% extra bonus on their first purchase, and you earn 50 points when they complete their transaction.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Individual News Modals -->
-    <div id="news1Modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>🎉 New Year Mega Bonus Campaign</h2>
-            <div class="date">January 1, 2025</div>
-            <br>
-            <p>We're excited to announce our biggest bonus campaign yet! For the entire month of January, get <strong>10% extra bonus airtime</strong> on all purchases above 500 KES.</p>
-            <br>
-            <p>This is in addition to our regular 5% bonus, meaning you'll get <strong>15% total bonus airtime</strong> on qualifying purchases!</p>
-            <br>
-            <h4>How to Qualify:</h4>
-            <ul style="padding-left: 20px; margin: 15px 0;">
-                <li>Make any airtime purchase of 500 KES or more</li>
-                <li>Campaign valid throughout January 2025</li>
-                <li>Bonus automatically added to your airtime delivery</li>
-                <li>No maximum limit on bonus earnings</li>
-            </ul>
-            <br>
-            <p><strong>Example:</strong> Purchase 1000 KES airtime and receive 1150 KES total (1000 + 5% regular + 10% campaign bonus)!</p>
-        </div>
-    </div>
-
-    <div id="news2Modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>🚀 Universal Network Support</h2>
-            <div class="date">December 28, 2024</div>
-            <br>
-            <p>Great news! Etopup now supports <strong>ALL major Kenyan mobile networks</strong> including:</p>
-            <br>
-            <ul style="padding-left: 20px; margin: 15px 0;">
-                <li>📱 Safaricom</li>
-                <li>📱 Airtel Kenya</li>
-                <li>📱 Telkom Kenya</li>
-                <li>📱 Equitel</li>
-                <li>📱 All other MVNO networks</li>
-            </ul>
-            <br>
-            <h4>Benefits of Universal Support:</h4>
-            <ul style="padding-left: 20px; margin: 15px 0;">
-                <li>✅ One platform for all networks</li>
-                <li>✅ Same great bonuses and rewards</li>
-                <li>✅ Instant delivery across all carriers</li>
-                <li>✅ Unified reward points system</li>
-                <li>✅ Single customer support contact</li>
-            </ul>
-            <br>
-            <p>You can now top up any network using our unified platform with the same great experience!</p>
-        </div>
-    </div>
-
-    <div id="news3Modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>💎 Premium VIP Plans Launch</h2>
-            <div class="date">December 25, 2024</div>
-            <br>
-            <p>Introducing <strong>Etopup Premium</strong>! Our VIP membership program for our most valued customers.</p>
-            <br>
-            <h4>Premium Benefits Include:</h4>
-            <ul style="padding-left: 20px; margin: 15px 0;">
-                <li>⭐ 2x reward points on every purchase</li>
-                <li>🎯 Priority customer support</li>
-                <li>🎁 Exclusive bonus campaigns</li>
-                <li>💰 Monthly rewards and cashback</li>
-                <li>🚀 Early access to new features</li>
-                <li>📞 Dedicated VIP support line</li>
-            </ul>
-            <br>
-            <h4>How to Become Premium:</h4>
-            <p>Premium membership is available to customers who make regular purchases. Qualifying customers will be automatically invited to join our VIP program.</p>
-            <br>
-            <p><strong>Contact support to learn more about Premium eligibility!</strong></p>
-        </div>
-    </div>
-
-    <div id="news4Modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>⚡ Scheduled System Maintenance</h2>
-            <div class="date">January 10, 2025</div>
-            <br>
-            <p>We will be performing scheduled system maintenance to improve our service quality and performance.</p>
-            <br>
-            <h4>Maintenance Details:</h4>
-            <ul style="padding-left: 20px; margin: 15px 0;">
-                <li>📅 Date: January 15, 2025</li>
-                <li>⏰ Time: 2:00 AM - 3:00 AM EAT</li>
-                <li>⏱️ Duration: 1 hour maximum</li>
-                <li>🔧 Type: Server upgrades and optimization</li>
-            </ul>
-            <br>
-            <h4>Expected Impact:</h4>
-            <p>✅ <strong>No service interruption expected</strong></p>
-            <p>✅ All transactions will continue to process normally</p>
-            <p>✅ Customer support remains available 24/7</p>
-            <br>
-            <h4>Improvements After Maintenance:</h4>
-            <ul style="padding-left: 20px; margin: 15px 0;">
-                <li>🚀 Faster transaction processing</li>
-                <li>💪 Improved system reliability</li>
-                <li>🔒 Enhanced security features</li>
-                <li>📱 Better mobile experience</li>
-            </ul>
-        </div>
-    </div>
-
-    <div id="news5Modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>🎁 Referral Program Launch</h2>
-            <div class="date">December 20, 2024</div>
-            <br>
-            <p>Share the love and earn rewards! Our new referral program lets you earn bonus points when you invite friends to Etopup.</p>
-            <br>
-            <h4>How It Works:</h4>
-            <ol style="padding-left: 20px; margin: 15px 0;">
-                <li>Get your unique referral code from customer support</li>
-                <li>Share the code with friends and family</li>
-                <li>They get 5% extra bonus on their first purchase</li>
-                <li>You earn 50 points when they complete their first transaction</li>
-            </ol>
-            <br>
-            <h4>Referral Rewards:</h4>
-            <ul style="padding-left: 20px; margin: 15px 0;">
-                <li>🎯 50 points per successful referral</li>
-                <li>🎁 Your friend gets 5% extra bonus</li>
-                <li>♾️ No limit on referrals</li>
-                <li>⚡ Points credited instantly</li>
-            </ul>
-            <br>
-            <h4>Get Started:</h4>
-            <p>Contact our customer support team to get your unique referral code and start earning today!</p>
-            <br>
-            <p><strong>📞 WhatsApp: +254 718 369 524</strong></p>
-        </div>
-    </div>
-
-    <!-- Rewards Modal -->
-    <div id="rewardsModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>My Rewards</h2>
-            <div id="rewardsModalContent">
-                Loading rewards...
-            </div>
+    <!-- Notification Ticker -->
+    <div class="notification-ticker">
+        <div class="ticker-content">
+            <span class="ticker-item">🎉 254712****78 received 100 KSH + 5 KSH bonus!</span>
+            <span class="ticker-item">🎉 254701****45 received 50 KSH + 2.5 KSH bonus!</span>
+            <span class="ticker-item">🎉 254722****90 received 200 KSH + 10 KSH bonus!</span>
+            <span class="ticker-item">🎉 254733****12 received 150 KSH + 7.5 KSH bonus!</span>
+            <span class="ticker-item">🎉 254745****67 received 75 KSH + 3.75 KSH bonus!</span>
         </div>
     </div>
 
     <script>
-        // Configuration
-        const API_BASE_URL = 'https://airtimepurchase.onrender.com';
-        
-        // Global variables
-        let currentTransactionRef = null;
-        let statusCheckInterval = null;
+        const SERVER_URL = 'https://airtimepurchase.onrender.com';
+        let selectedProvider = '';
+        let currentNewsIndex = 0;
 
-        // DOM Elements
-        const purchaseForm = document.getElementById('purchaseForm');
-        const redeemForm = document.getElementById('redeemForm');
-        const purchaseBtn = document.getElementById('purchaseBtn');
-        const btnText = document.getElementById('btnText');
-        const btnLoading = document.getElementById('btnLoading');
-        const statusSection = document.getElementById('statusSection');
-
-        // Fake notifications array
-        const fakeNotifications = [
-            "💰 User from Nairobi just purchased 500 KES airtime",
-            "🎉 Someone redeemed 200 points for airtime",
-            "⚡ User from Mombasa topped up 1000 KES",
-            "🎁 New user just earned 50 bonus points",
-            "💸 User from Kisumu bought 300 KES airtime",
-            "🌟 Someone just got 15% bonus airtime",
-            "📱 User topped up Safaricom 750 KES",
-            "🎯 User from Eldoret redeemed 500 points",
-            "💎 VIP customer purchased 2000 KES airtime",
-            "🚀 User just earned their first reward points"
+        const newsData = [
+            {
+                title: "Get 5% Bonus on Every Top-up!",
+                excerpt: "Exciting news! All airtime purchases now include a 5% bonus...",
+                full: "We're excited to announce that every airtime purchase on Etopup now comes with a 5% bonus! This means when you buy 100 KSH airtime, you'll receive 105 KSH total. The bonus is automatically added to your airtime and sent to your number instantly. There's no limit - the more you top up, the more bonus you get!"
+            },
+            {
+                title: "Instant M-PESA Integration",
+                excerpt: "Experience lightning-fast airtime delivery with our M-PESA integration...",
+                full: "Our platform now features seamless M-PESA integration for instant payments. Simply enter your phone number, and you'll receive an STK push notification on your phone. Approve the payment, and your airtime (plus bonus!) will be delivered within seconds. No more waiting or manual confirmations needed!"
+            },
+            {
+                title: "Support for All Major Networks",
+                excerpt: "Buy airtime for Safaricom, Airtel, and Telkom networks...",
+                full: "Etopup now supports all major Kenyan mobile networks including Safaricom, Airtel, and Telkom. Whether you're topping up for yourself or sending airtime to friends and family, we've got you covered. Select your preferred network and enjoy the same fast, reliable service across all providers."
+            },
+            {
+                title: "Secure & Reliable Transactions",
+                excerpt: "Your transactions are protected with bank-level security...",
+                full: "At Etopup, we take security seriously. All transactions are encrypted with bank-level security protocols. Your payment information is never stored on our servers, and we use industry-standard authentication methods. Our system has processed thousands of transactions with a 99.9% success rate."
+            },
+            {
+                title: "24/7 Customer Support Available",
+                excerpt: "Need help? Our support team is available round the clock...",
+                full: "We're here to help! Our customer support team is available 24/7 to assist with any questions or issues. Whether you need help with a transaction, have questions about our bonus program, or need technical assistance, we're just a message away. Contact us anytime through our support channels."
+            }
         ];
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            setupEventListeners();
-            loadUserRewards();
-            startFakeNotifications();
-        });
+        const contentData = {
+            about: {
+                title: "About Us",
+                content: `<p>Etopup is Kenya's leading airtime top-up platform, providing fast, secure, and convenient mobile airtime services. We've partnered with all major mobile networks to bring you the best airtime purchasing experience.</p>
+                <p style="margin-top: 15px;">Our mission is to make airtime purchases simple and rewarding. That's why we offer a 5% bonus on every top-up, instant delivery, and 24/7 customer support.</p>
+                <p style="margin-top: 15px;">Join thousands of satisfied customers who trust Etopup for their airtime needs.</p>`
+            },
+            contact: {
+                title: "Contact Us",
+                content: `<p><strong>Email:</strong> support@etopup.co.ke</p>
+                <p style="margin-top: 10px;"><strong>Phone:</strong> 0700 000 000</p>
+                <p style="margin-top: 10px;"><strong>WhatsApp:</strong> 0700 000 000</p>
+                <p style="margin-top: 10px;"><strong>Business Hours:</strong> 24/7</p>
+                <p style="margin-top: 15px;">We typically respond to all inquiries within 1 hour.</p>`
+            },
+            privacy: {
+                title: "Privacy Policy",
+                content: `<p>At Etopup, we respect your privacy and are committed to protecting your personal information.</p>
+                <p style="margin-top: 15px;"><strong>Information We Collect:</strong> We collect phone numbers and transaction data necessary to process your airtime purchases.</p>
+                <p style="margin-top: 15px;"><strong>How We Use Your Data:</strong> Your information is used solely to process transactions and improve our services. We never sell or share your data with third parties.</p>
+                <p style="margin-top: 15px;"><strong>Security:</strong> All data is encrypted and stored securely using industry-standard protocols.</p>`
+            },
+            refund: {
+                title: "Refund Policy",
+                content: `<p>We strive for 100% customer satisfaction. If you experience any issues with your purchase, we're here to help.</p>
+                <p style="margin-top: 15px;"><strong>Eligible Refunds:</strong> Failed transactions where payment was deducted but airtime was not received.</p>
+                <p style="margin-top: 15px;"><strong>Refund Process:</strong> Contact our support team within 24 hours with your transaction reference. Refunds are processed within 3-5 business days.</p>
+                <p style="margin-top: 15px;"><strong>Note:</strong> Successful airtime deliveries cannot be refunded.</p>`
+            },
+            'how-to': {
+                title: "How to Purchase",
+                content: `<p><strong>Step 1:</strong> Select your mobile network provider (Safaricom, Airtel, or Telkom)</p>
+                <p style="margin-top: 10px;"><strong>Step 2:</strong> Enter the phone number to receive airtime</p>
+                <p style="margin-top: 10px;"><strong>Step 3:</strong> Enter the M-PESA number for payment</p>
+                <p style="margin-top: 10px;"><strong>Step 4:</strong> Enter amount (5-200 KSH)</p>
+                <p style="margin-top: 10px;"><strong>Step 5:</strong> Click "Purchase Airtime" and approve M-PESA prompt</p>
+                <p style="margin-top: 10px;"><strong>Step 6:</strong> Receive airtime + 5% bonus instantly!</p>`
+            },
+            terms: {
+                title: "Terms & Conditions",
+                content: `<p>By using Etopup, you agree to the following terms:</p>
+                <p style="margin-top: 15px;">1. All transactions are final once airtime is successfully delivered.</p>
+                <p style="margin-top: 10px;">2. Minimum purchase amount is 5 KSH, maximum is 200 KSH per transaction.</p>
+                <p style="margin-top: 10px;">3. 5% bonus airtime is automatically added to all successful purchases.</p>
+                <p style="margin-top: 10px;">4. You must provide accurate phone numbers for transactions.</p>
+                <p style="margin-top: 10px;">5. We reserve the right to refuse service for suspected fraudulent activity.</p>`
+            },
+            faq: {
+                title: "FAQ",
+                content: `<p><strong>Q: How long does airtime delivery take?</strong><br>A: Airtime is delivered instantly after payment confirmation, usually within 30 seconds.</p>
+                <p style="margin-top: 15px;"><strong>Q: What is the 5% bonus?</strong><br>A: Every purchase automatically includes 5% extra airtime. For example, 100 KSH purchase gives you 105 KSH total.</p>
+                <p style="margin-top: 15px;"><strong>Q: Can I buy for different networks?</strong><br>A: Yes! We support Safaricom, Airtel, and Telkom.</p>
+                <p style="margin-top: 15px;"><strong>Q: What if payment deducts but no airtime received?</strong><br>A: Contact support immediately with your transaction reference for assistance.</p>`
+            }
+        };
 
-        // Start fake notifications
-        function startFakeNotifications() {
-            setInterval(() => {
-                if (Math.random() < 0.3) { // 30% chance every 10 seconds
-                    showFakeNotification();
-                }
-            }, 10000);
-        }
-
-        function showFakeNotification() {
-            const notification = fakeNotifications[Math.floor(Math.random() * fakeNotifications.length)];
-            const fakeNotif = document.createElement('div');
-            fakeNotif.className = 'fake-notification';
-            fakeNotif.innerHTML = `<span class="notification-icon">🔔</span>${notification}`;
-            
-            document.body.appendChild(fakeNotif);
-            
-            // Show notification
-            setTimeout(() => fakeNotif.classList.add('show'), 100);
-            
-            // Hide and remove notification
-            setTimeout(() => {
-                fakeNotif.classList.remove('show');
-                setTimeout(() => fakeNotif.remove(), 300);
-            }, 4000);
-        }
-
-        function setupEventListeners() {
-            // Purchase form
-            purchaseForm.addEventListener('submit', handlePurchase);
-            
-            // Redeem form
-            redeemForm.addEventListener('submit', handleRedeem);
-            
-            // Phone number formatting
-            document.getElementById('paymentNumber').addEventListener('input', formatPhoneNumber);
-            document.getElementById('airtimeNumber').addEventListener('input', formatPhoneNumber);
-            document.getElementById('redeemPhone').addEventListener('input', formatPhoneNumber);
-            
-            // Amount validation
-            document.getElementById('amount').addEventListener('input', validateAmount);
-            
-            // Modal events
-            setupModalEvents();
-            
-            // Auto-refresh points every 30 seconds
-            setInterval(loadUserRewards, 30000);
-        }
-
-        function setupModalEvents() {
-            // Close modal when clicking X
-            document.querySelectorAll('.close').forEach(closeBtn => {
-                closeBtn.addEventListener('click', function() {
-                    this.closest('.modal').style.display = 'none';
-                });
+        function selectProvider(provider) {
+            selectedProvider = provider;
+            document.querySelectorAll('.provider-option').forEach(el => {
+                el.classList.remove('selected');
             });
-            
-            // Close modal when clicking outside
-            window.addEventListener('click', function(event) {
-                if (event.target.classList.contains('modal')) {
-                    event.target.style.display = 'none';
-                }
-            });
+            document.getElementById(`provider-${provider}`).classList.add('selected');
         }
 
-        // Phone number formatting and validation
-        function formatPhoneNumber(event) {
-            const input = event.target;
-            let value = input.value.replace(/\D/g, '');
-            
-            // Remove leading zeros or 254
-            if (value.startsWith('0')) {
-                value = value.substring(1);
-            }
-            if (value.startsWith('254')) {
-                value = value.substring(3);
-            }
-            
-            // Limit to 9 digits after 254
-            if (value.length > 9) {
-                value = value.substring(0, 9);
-            }
-            
-            input.value = value;
-            
-            // Validate phone number
-            validatePhoneNumber(input);
+        function validatePhone(phone) {
+            const pattern = /^(0|254)?[17]\d{8}$/;
+            return pattern.test(phone.replace(/\s/g, ''));
         }
 
-        function validatePhoneNumber(input) {
-            const value = input.value;
-            const errorElement = document.getElementById(input.id + 'Error');
-            
-            if (value && (value.length !== 9 || !value.match(/^[17]/))) {
-                showFieldError(input, errorElement, 'Enter valid Kenyan phone number (7XX or 1XX)');
-                return false;
-            } else {
-                hideFieldError(input, errorElement);
-                return true;
-            }
-        }
-
-        function validateAmount() {
-            const amountInput = document.getElementById('amount');
-            const amount = parseFloat(amountInput.value);
-            const errorElement = document.getElementById('amountError');
-            
-            if (amountInput.value && (isNaN(amount) || amount < 10 || amount > 10000)) {
-                showFieldError(amountInput, errorElement, 'Amount must be between 10 and 10,000 KES');
-                return false;
-            } else {
-                hideFieldError(amountInput, errorElement);
-                return true;
-            }
-        }
-
-        function showFieldError(input, errorElement, message) {
-            input.classList.add('error');
-            errorElement.textContent = message;
-            errorElement.style.display = 'block';
-        }
-
-        function hideFieldError(input, errorElement) {
-            input.classList.remove('error');
-            errorElement.style.display = 'none';
-        }
-
-        // Purchase functionality
         async function handlePurchase(event) {
             event.preventDefault();
             
-            const paymentNumber = document.getElementById('paymentNumber').value;
-            const airtimeNumber = document.getElementById('airtimeNumber').value;
-            const amount = document.getElementById('amount').value;
-            
-            // Validate form
-            if (!validateForm()) {
+            if (!selectedProvider) {
+                alert('Please select a network provider');
                 return;
             }
 
-            // Show fake notifications during purchase
-            showPurchaseNotifications();
-            
-            // Show loading state
-            setLoadingState(true);
-            
-            try {
-                const payload = {
-                    payment_number: formatPhoneForAPI(paymentNumber),
-                    amount: parseFloat(amount)
-                };
-                
-                if (airtimeNumber.trim()) {
-                    payload.airtime_number = formatPhoneForAPI(airtimeNumber);
-                }
-                
-                const response = await fetch(`${API_BASE_URL}/purchase`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(payload)
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    currentTransactionRef = result.reference;
-                    showToast('success', '🎉 Purchase initiated! Check your phone for M-Pesa prompt.');
-                    showTransactionStatus(result.reference);
-                    startStatusPolling(result.reference);
-                } else {
-                    showToast('error', result.message || 'Purchase failed. Please try again.');
-                }
-                
-            } catch (error) {
-                console.error('Purchase error:', error);
-                showToast('error', 'Network error. Please check your connection and try again.');
-            } finally {
-                setLoadingState(false);
+            const airtimeNumber = document.getElementById('airtimeNumber').value.trim();
+            const paymentNumber = document.getElementById('paymentNumber').value.trim();
+            const amount = parseInt(document.getElementById('amount').value);
+
+            let hasError = false;
+
+            // Validate airtime number
+            if (!validatePhone(airtimeNumber)) {
+                document.getElementById('airtimeNumber').classList.add('error');
+                document.getElementById('airtimeNumberError').style.display = 'block';
+                hasError = true;
+            } else {
+                document.getElementById('airtimeNumber').classList.remove('error');
+                document.getElementById('airtimeNumberError').style.display = 'none';
             }
-        }
 
-        function showPurchaseNotifications() {
-            const notifications = [
-                "🔐 Secure connection established",
-                "💳 Processing M-Pesa payment...",
-                "⚡ Validating transaction details",
-                "🎯 Preparing airtime delivery"
-            ];
-
-            notifications.forEach((notif, index) => {
-                setTimeout(() => {
-                    showFakeNotification();
-                }, index * 1500);
-            });
-        }
-
-        function validateForm() {
-            const paymentNumber = document.getElementById('paymentNumber').value;
-            const amount = document.getElementById('amount').value;
-            
-            let isValid = true;
-            
             // Validate payment number
-            if (!paymentNumber) {
-                showFieldError(
-                    document.getElementById('paymentNumber'),
-                    document.getElementById('paymentNumberError'),
-                    'Payment phone number is required'
-                );
-                isValid = false;
-            } else if (!validatePhoneNumber(document.getElementById('paymentNumber'))) {
-                isValid = false;
+            if (!validatePhone(paymentNumber)) {
+                document.getElementById('paymentNumber').classList.add('error');
+                document.getElementById('paymentNumberError').style.display = 'block';
+                hasError = true;
+            } else {
+                document.getElementById('paymentNumber').classList.remove('error');
+                document.getElementById('paymentNumberError').style.display = 'none';
             }
-            
+
             // Validate amount
-            if (!amount) {
-                showFieldError(
-                    document.getElementById('amount'),
-                    document.getElementById('amountError'),
-                    'Amount is required'
-                );
-                isValid = false;
-            } else if (!validateAmount()) {
-                isValid = false;
-            }
-            
-            // Validate airtime number if provided
-            const airtimeNumber = document.getElementById('airtimeNumber').value;
-            if (airtimeNumber && !validatePhoneNumber(document.getElementById('airtimeNumber'))) {
-                isValid = false;
-            }
-            
-            return isValid;
-        }
-
-        function formatPhoneForAPI(phoneNumber) {
-            if (!phoneNumber) return '';
-            let cleaned = phoneNumber.replace(/\D/g, '');
-            if (cleaned.startsWith('0')) {
-                return '254' + cleaned.substring(1);
-            }
-            if (!cleaned.startsWith('254')) {
-                return '254' + cleaned;
-            }
-            return cleaned;
-        }
-
-        function setLoadingState(loading) {
-            if (loading) {
-                purchaseBtn.disabled = true;
-                btnText.style.display = 'none';
-                btnLoading.style.display = 'block';
+            if (isNaN(amount) || amount < 5 || amount > 200) {
+                document.getElementById('amount').classList.add('error');
+                document.getElementById('amountError').style.display = 'block';
+                hasError = true;
             } else {
-                purchaseBtn.disabled = false;
-                btnText.style.display = 'block';
-                btnLoading.style.display = 'none';
+                document.getElementById('amount').classList.remove('error');
+                document.getElementById('amountError').style.display = 'none';
             }
-        }
 
-        // Transaction status monitoring
-        function showTransactionStatus(reference) {
-            statusSection.style.display = 'block';
-            statusSection.scrollIntoView({ behavior: 'smooth' });
-        }
+            if (hasError) return;
 
-        function startStatusPolling(reference) {
-            if (statusCheckInterval) {
-                clearInterval(statusCheckInterval);
-            }
-            
-            statusCheckInterval = setInterval(async () => {
-                await checkTransactionStatus(reference);
-            }, 3000);
-            
-            // Stop polling after 10 minutes
-            setTimeout(() => {
-                if (statusCheckInterval) {
-                    clearInterval(statusCheckInterval);
-                    statusCheckInterval = null;
-                }
-            }, 600000);
-        }
+            // Show loading
+            document.getElementById('loadingOverlay').classList.add('active');
 
-        async function checkTransactionStatus(reference) {
             try {
-                const response = await fetch(`${API_BASE_URL}/api/status/${reference}`);
-                const result = await response.json();
-                
-                if (result.success) {
-                    updateStatusDisplay(result);
-                    
-                    // Stop polling if transaction is complete
-                    if (result.paycenta.status === 'success' && result.airtime === 'success') {
-                        clearInterval(statusCheckInterval);
-                        statusCheckInterval = null;
-                        showToast('success', '🎉 Transaction completed! Airtime delivered successfully.');
-                        loadUserRewards(); // Refresh rewards
-                    } else if (result.paycenta.status === 'failed' || result.airtime === 'failed') {
-                        clearInterval(statusCheckInterval);
-                        statusCheckInterval = null;
-                        showToast('error', 'Transaction failed. Please try again or contact support.');
-                    }
-                }
-            } catch (error) {
-                console.error('Status check error:', error);
-            }
-        }
-
-        function updateStatusDisplay(status) {
-            const statusContent = document.getElementById('statusContent');
-            
-            statusContent.innerHTML = `
-                <div class="status-item">
-                    <span>Transaction ID:</span>
-                    <span style="font-family: monospace;">${status.reference}</span>
-                </div>
-                <div class="status-item">
-                    <span>Payment Status:</span>
-                    <span class="status-badge status-${status.paycenta.status}">${status.paycenta.status}</span>
-                </div>
-                <div class="status-item">
-                    <span>Airtime Status:</span>
-                    <span class="status-badge status-${status.airtime}">${status.airtime}</span>
-                </div>
-                <div class="status-item">
-                    <span>Amount:</span>
-                    <span>KES ${status.amount}</span>
-                </div>
-                <div class="status-item">
-                    <span>Bonus Airtime:</span>
-                    <span>${status.bonusSent ? '✅ Sent' : '⏳ Processing'}</span>
-                </div>
-            `;
-        }
-
-        function hideStatus() {
-            statusSection.style.display = 'none';
-            if (statusCheckInterval) {
-                clearInterval(statusCheckInterval);
-                statusCheckInterval = null;
-            }
-        }
-
-        // Rewards functionality
-        async function loadUserRewards() {
-            const paymentNumber = document.getElementById('paymentNumber').value;
-            if (!paymentNumber) return;
-            
-            try {
-                const formattedPhone = formatPhoneForAPI(paymentNumber);
-                const response = await fetch(`${API_BASE_URL}/rewards/${formattedPhone}`);
-                const result = await response.json();
-                
-                if (result.success) {
-                    updateRewardsDisplay(result);
-                }
-            } catch (error) {
-                console.error('Error loading rewards:', error);
-            }
-        }
-
-        function updateRewardsDisplay(rewards) {
-            document.getElementById('pointsBalance').textContent = rewards.points.toLocaleString();
-            
-            // Update transaction history
-            const historyContent = document.getElementById('historyContent');
-            
-            if (rewards.history && rewards.history.length > 0) {
-                historyContent.innerHTML = rewards.history.slice(-5).reverse().map(item => {
-                    const date = new Date(item.at).toLocaleDateString();
-                    const type = item.type === 'earn' ? '📈' : '📉';
-                    const points = item.type === 'earn' ? `+${item.points}` : `${item.points}`;
-                    const color = item.type === 'earn' ? '#4CAF50' : '#ff9800';
-                    
-                    return `
-                        <div class="history-item">
-                            <span>${type} ${item.type === 'earn' ? 'Earned' : 'Redeemed'}</span>
-                            <span style="color: ${color}; font-weight: bold;">${points} pts</span>
-                        </div>
-                    `;
-                }).join('');
-            } else {
-                historyContent.innerHTML = '<p style="text-align: center; color: #666;">No activity yet</p>';
-            }
-        }
-
-        async function handleRedeem(event) {
-            event.preventDefault();
-            
-            const phone = document.getElementById('redeemPhone').value;
-            const points = document.getElementById('redeemPoints').value;
-            
-            if (!phone || !points) {
-                showToast('error', 'Please fill in all fields');
-                return;
-            }
-            
-            if (parseInt(points) < 100) {
-                showToast('error', 'Minimum 100 points required for redemption');
-                return;
-            }
-
-            // Show fake notifications during redemption
-            showRedemptionNotifications();
-            
-            try {
-                const payload = {
-                    phone: formatPhoneForAPI(phone),
-                    points: parseInt(points)
-                };
-                
-                const response = await fetch(`${API_BASE_URL}/reward/redeem`, {
+                const response = await fetch(`${SERVER_URL}/purchase`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify({
+                        payment_number: paymentNumber,
+                        airtime_number: airtimeNumber,
+                        amount: amount
+                    })
                 });
-                
+
                 const result = await response.json();
-                
+
+                // Hide loading
+                document.getElementById('loadingOverlay').classList.remove('active');
+
                 if (result.success) {
-                    showToast('success', `🎉 Redeemed ${result.pointsUsed} points for KES ${result.airtimeKES} airtime!`);
-                    document.getElementById('redeemForm').reset();
-                    loadUserRewards();
-                } else {
-                    showToast('error', result.message || 'Redemption failed');
-                }
-                
-            } catch (error) {
-                console.error('Redeem error:', error);
-                showToast('error', 'Network error. Please try again.');
-            }
-        }
+                    // Calculate bonus
+                    const bonusAmount = Math.floor(amount * 0.05);
+                    const totalAmount = amount + bonusAmount;
 
-        function showRedemptionNotifications() {
-            const notifications = [
-                "🎯 Validating points balance",
-                "⚡ Processing redemption request",
-                "🎁 Preparing airtime delivery",
-                "✅ Redemption successful!"
-            ];
-
-            notifications.forEach((notif, index) => {
-                setTimeout(() => {
-                    showFakeNotification();
-                }, index * 1000);
-            });
-        }
-
-        async function checkRewards() {
-            const paymentNumber = document.getElementById('paymentNumber').value;
-            
-            if (!paymentNumber) {
-                showToast('warning', 'Please enter your phone number first');
-                return;
-            }
-            
-            await loadUserRewards();
-            showModal('rewardsModal');
-            
-            // Load detailed rewards in modal
-            try {
-                const formattedPhone = formatPhoneForAPI(paymentNumber);
-                const response = await fetch(`${API_BASE_URL}/rewards/${formattedPhone}`);
-                const result = await response.json();
-                
-                if (result.success) {
-                    document.getElementById('rewardsModalContent').innerHTML = `
-                        <div class="rewards-info">
-                            <h3>Points Balance: ${result.points.toLocaleString()}</h3>
-                            <p>Equivalent to: KES ${Math.floor(result.points / 100) * 10} airtime</p>
+                    // Show receipt
+                    const receiptHTML = `
+                        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; margin-bottom: 15px;">
+                            <h3 style="color: #667eea; margin-bottom: 15px;">✅ Transaction Successful!</h3>
+                            <p style="margin: 10px 0;"><strong>Reference:</strong> ${result.reference || 'N/A'}</p>
+                            <p style="margin: 10px 0;"><strong>Airtime Number:</strong> ${airtimeNumber}</p>
+                            <p style="margin: 10px 0;"><strong>Payment Number:</strong> ${paymentNumber}</p>
+                            <p style="margin: 10px 0;"><strong>Base Amount:</strong> ${amount} KSH</p>
+                            <p style="margin: 10px 0;"><strong>Bonus (5%):</strong> ${bonusAmount} KSH</p>
+                            <p style="margin: 10px 0;"><strong>Total Airtime:</strong> <span style="color: #4caf50; font-size: 20px; font-weight: bold;">${totalAmount} KSH</span></p>
+                            <p style="margin: 10px 0;"><strong>Provider:</strong> ${selectedProvider.charAt(0).toUpperCase() + selectedProvider.slice(1)}</p>
+                            <p style="margin: 10px 0;"><strong>Status:</strong> <span style="color: #4caf50;">Processing</span></p>
                         </div>
-                        <div class="transaction-history">
-                            <h4>Transaction History</h4>
-                            ${result.history.map(item => {
-                                const date = new Date(item.at).toLocaleString();
-                                const type = item.type === 'earn' ? '📈 Earned' : '📉 Redeemed';
-                                return `
-                                    <div class="history-item">
-                                        <div>
-                                            <strong>${type}</strong><br>
-                                            <small>${date}</small>
-                                        </div>
-                                        <div style="text-align: right;">
-                                            <strong>${item.points} pts</strong><br>
-                                            <small>KES ${item.amount}</small>
-                                        </div>
-                                    </div>
-                                `;
-                            }).join('') || '<p>No history available</p>'}
-                        </div>
+                        <p style="color: #666; font-size: 14px;">Please check your M-PESA for payment prompt. Airtime will be delivered once payment is confirmed.</p>
                     `;
+                    
+                    document.getElementById('receiptContent').innerHTML = receiptHTML;
+                    document.getElementById('receiptPopup').classList.add('active');
+
+                    // Reset form
+                    document.getElementById('purchaseForm').reset();
+                    selectedProvider = '';
+                    document.querySelectorAll('.provider-option').forEach(el => {
+                        el.classList.remove('selected');
+                    });
+                } else {
+                    alert('Transaction failed: ' + (result.message || 'Unknown error'));
                 }
             } catch (error) {
-                console.error('Error loading detailed rewards:', error);
+                document.getElementById('loadingOverlay').classList.remove('active');
+                alert('Error: ' + error.message);
             }
         }
 
-        // Modal functions
-        function showModal(modalId) {
-            document.getElementById(modalId).style.display = 'block';
+        function toggleMenu() {
+            document.getElementById('menuPopup').classList.add('active');
         }
 
-        function showNewsModal(newsId) {
-            document.getElementById(newsId + 'Modal').style.display = 'block';
+        function closePopup(popupId) {
+            document.getElementById(popupId).classList.remove('active');
         }
 
-        // Toast notifications
-        function showToast(type, message, duration = 5000) {
-            // Remove existing toasts
-            const existingToasts = document.querySelectorAll('.toast');
-            existingToasts.forEach(toast => toast.remove());
+        function openPopup(type) {
+            closePopup('menuPopup');
             
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.textContent = message;
-            
-            document.body.appendChild(toast);
-            
-            // Trigger animation
-            setTimeout(() => toast.classList.add('show'), 100);
-            
-            // Auto remove
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 300);
-            }, duration);
-        }
-
-        // Auto-fill redeem phone from payment phone
-        document.getElementById('paymentNumber').addEventListener('input', function() {
-            if (this.value && !document.getElementById('redeemPhone').value) {
-                document.getElementById('redeemPhone').value = this.value;
+            if (contentData[type]) {
+                document.getElementById('popupTitle').textContent = contentData[type].title;
+                document.getElementById('popupContent').innerHTML = contentData[type].content;
+                document.getElementById('contentPopup').classList.add('active');
             }
-        });
-
-        // Clear form function
-        function clearForm() {
-            document.getElementById('purchaseForm').reset();
-            hideStatus();
         }
 
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function(event) {
-            // Escape key to close modals
-            if (event.key === 'Escape') {
-                document.querySelectorAll('.modal').forEach(modal => {
-                    modal.style.display = 'none';
-                });
-            }
-        });
+        function renderNews() {
+            const newsContainer = document.getElementById('newsContainer');
+            newsContainer.innerHTML = '';
+            
+            const news = newsData[currentNewsIndex];
+            const newsItem = document.createElement('div');
+            newsItem.className = 'news-item';
+            newsItem.innerHTML = `
+                <h3>${news.title}</h3>
+                <p>${news.excerpt}</p>
+            `;
+            newsItem.onclick = () => openNewsPopup(currentNewsIndex);
+            newsContainer.appendChild(newsItem);
+        }
 
-        // Auto-refresh rewards on focus
-        window.addEventListener('focus', function() {
-            loadUserRewards();
+        function changeNews(direction) {
+            currentNewsIndex = (currentNewsIndex + direction + newsData.length) % newsData.length;
+            renderNews();
+        }
+
+        function openNewsPopup(index) {
+            const news = newsData[index];
+            document.getElementById('newsPopupTitle').textContent = news.title;
+            document.getElementById('newsPopupContent').textContent = news.full;
+            document.getElementById('newsPopup').classList.add('active');
+        }
+
+        // Initialize
+        renderNews();
+
+        // Close popups when clicking overlay
+        document.querySelectorAll('.popup-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.classList.remove('active');
+                }
+            });
         });
     </script>
 </body>
-    </html>
+                    </html>
